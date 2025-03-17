@@ -101,6 +101,8 @@ import SunriseSunset from "../components/SunriseSunset";
 import WindSpeed from "../components/WindSpeed";
 import HourlyWeather from "../components/HourlyWeather";
 import FeelsLike from "../components/FeelsLike";
+import Humadity from "../components/Humadity";
+import HumidityInfo from "../components/Humadity";
 
 export default function Home() {
   const [city, setCity] = useState("");
@@ -199,6 +201,7 @@ export default function Home() {
                     feelsLike={currentWeather.main.feels_like}
                   />
                 </div>
+                <HumidityInfo humadity={currentWeather.main.humadity}/>
               </div>
             )}
         </main>
