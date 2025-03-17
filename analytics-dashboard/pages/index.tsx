@@ -92,13 +92,15 @@
 //   );
 // }
 
-
-
 "use client";
 
 import { useState } from "react";
 import "../styles/globals.css"; // Make sure this is included
 import Weather from "../components/Weather";
+import SunriseSunset from "../components/SunriseSunset";
+import WindSpeed from "../components/WindSpeed";
+import HourlyWeather from "../components/HourlyWeather";
+import FeelsLike from "../components/FeelsLike";
 
 export default function Home() {
   const [city, setCity] = useState("");
@@ -171,13 +173,34 @@ export default function Home() {
 
           {errorAlert && <div className="text-red-500 mb-4">{errorAlert}</div>}
 
-          {currentWeather && forecastData && hourlyTemperatureData.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-2">
-                <Weather currentWeather={currentWeather} />
+          {currentWeather &&
+            forecastData &&
+            hourlyTemperatureData.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
+                  <Weather currentWeather={currentWeather} />
+                </div>
+
+                <div className="md:col-span-1">
+                  <SunriseSunset
+                    sunrise={currentWeather.sys.sunrise}
+                    sunset={currentWeather.sys.sunset}
+                  />
+                  <WindSpeed windSpeed={currentWeather.wind.speed} />
+                </div>
+                <div className="md:col-span-2">
+                  <HourlyWeather
+                    HourlyTemperatureData={hourlyTemperatureData}
+                  />
+                </div>
+                <div className="md:col-span-1">
+                  <FeelsLike
+                    actualTemperature={currentWeather.main.temp}
+                    feelsLike={currentWeather.main.feels_like}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </main>
       </div>
     </>
