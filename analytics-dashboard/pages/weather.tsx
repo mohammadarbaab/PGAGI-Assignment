@@ -40,7 +40,7 @@ export default function Home() {
         // console.log(forecastData,"this is for data")
         const forecastData = await forecastResponse.json();
         console.log(forecastData, "This is the forecast data");
-      
+
         setForecastData(forecastData.list.slice(0, 5 * 8)); // First 5 days' data
 
         const hourlyTemperatureData = forecastData.list.map((hourlyEntry) => ({

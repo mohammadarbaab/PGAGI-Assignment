@@ -1,12 +1,13 @@
-import { Provider } from "react-redux";
-// import { store } from "../store";
-import "../styles/globals.css";
+// pages/_app.tsx
+import { AppProps } from 'next/app';
+import Layout from './components/Layout';
+import '../styles/globals.css'; // Optional: Add your global styles here
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    // <Provider store={store}>
+    <Layout>
       <Component {...pageProps} />
-    // </Provider>
+    </Layout>
   );
 }
 
