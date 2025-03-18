@@ -1,0 +1,196 @@
+{ removeDuplicateData } from '@/utils
+ 
+Article from '@/components/Article'
+ 
+{ getNewsSearch } from '@/api
+ 
+process.env.API_TOKEN_NEWS
+ 
+process.env.API_TOKEN_NEWS
+ 
+ process.env.NEWS_API_KEY
+ 
+import { news } from "@/types"
+
+export const removeDuplicateData = (articles:any) => {
+  const randomArticle:news[] = articles?.articles
+  const filterArticles = randomArticle.filter(article => article?.source.id !== null)
+  return filterArticles
+}
+ 
+import { getNewsSearch } from '@/api'
+import Article from '@/components/Article'
+import { removeDuplicateData } from '@/utils'
+
+const World =async  () => {
+  const newsWorld = await getNewsSearch("world")
+  const filterArticles = removeDuplicateData(newsWorld)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default World
+ 
+import { getNewsSearch } from '@/api'
+import Article from '@/components/Article'
+import { removeDuplicateData } from '@/utils'
+
+const Sports = async () => {
+  const newsWorld = await getNewsSearch("sports")
+  const filterArticles = removeDuplicateData(newsWorld)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default Sports
+ 
+import { getNewsSearch } from '@/api'
+import Article from '@/components/Article'
+import { removeDuplicateData } from '@/utils'
+
+const Science = async () => {
+  const newsWorld = await getNewsSearch("science")
+  const filterArticles = removeDuplicateData(newsWorld)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default Science
+ 
+import { getNewsSearch } from '@/api'
+import Article from '@/components/Article'
+import { removeDuplicateData } from '@/utils'
+
+const Indonesia = async () => {
+  const newsWorld = await getNewsSearch("indonesia")
+  const filterArticles = removeDuplicateData(newsWorld)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default Indonesia
+ 
+import { getNewsSearch } from '@/api'
+import Article from '@/components/Article'
+import { removeDuplicateData } from '@/utils'
+
+const Business = async () => {
+  const newsWorld = await getNewsSearch("business")
+  const filterArticles = removeDuplicateData(newsWorld)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default Business
+ 
+"use client";
+import { NextPage } from 'next';
+
+interface ErrorProps {
+  statusCode: number;
+}
+
+const ErrorPage: NextPage<ErrorProps> = ({ statusCode }) => {
+  return (
+    <div>
+      {statusCode
+        ? `An error ${statusCode} occurred on server`
+        : 'An error occurred on client'}
+    </div>
+  );
+};
+
+ErrorPage.getInitialProps = async ({ res, err }) => {
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
+  return { statusCode };
+};
+
+export default ErrorPage;
+
+ 
+import { getNewsTopHeadlines } from '../pages/api'
+import { removeDuplicateData } from '../utils'
+import Article from './Article'
+
+const TopHeadlines = async () => {
+  const newsTop = await getNewsTopHeadlines()
+  const filterArticles = removeDuplicateData(newsTop)
+
+  return (
+    <div className='w-[700px]'>
+      {filterArticles.map((article,idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <Article data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default TopHeadlines
+ 
+import { getNewsSearch } from '@/api'
+import RandomArticle from './RandomArticle'
+import { removeDuplicateData } from '@/utils'
+
+const RandomNews = async () => {
+  const randomNews = await getNewsSearch("random news")
+  const filterArticles = removeDuplicateData(randomNews)
+
+
+  return (
+    <div className='mt-4 w-[450px] border-l border-gray-300'>
+      <h1 className="pl-2 text-2xl font-fold underline">Random News</h1>
+      {filterArticles.map((article, idx) => (
+        <div key={`${article?.title}-${idx}`}>
+          <RandomArticle data={article} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default RandomNews
+ 
+{ removeDuplicateData } from '@/utils'
+ 
