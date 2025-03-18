@@ -1,3 +1,323 @@
+// "use client";
+// // pages/news.tsx
+// import React from "react";
+// import Header from "../components/Header";
+// import Navbar from "../components/Navbar";
+// import TopHeadlines from "../components/TopHeadlines";
+// const NewsApp = () => {
+//   return (
+//     <div>
+//       <main className="px-2 md:px-20">
+//         <Header />
+//         <Navbar />
+//         <section className="flex justify-between">
+//           <main className="mt-4">
+//             <TopHeadlines />
+//           </main>
+//         </section>
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default NewsApp;
+
+// "use client";
+// import React from "react";
+// import { useState } from "react";
+// import { useEffect } from "react";
+// import Head from "next/head";
+// import Image from "next/image";
+// import Link from "next/link";
+// // import { error } from "console";
+// // 
+// const newsApi = "804b5ac5eb154a81ad4dc4b10ada6b7f";
+// const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApi}`;
+
+// Craete a custom component
+// const NewsCard = ({ article }) => {
+//   return (
+//     <div>
+//       <Image
+//         src={article.urlToImage || "./"}
+//         alt={article.title}
+//         width={250}
+//         height={250}
+//         className="w-full h-64 object-fill"
+//         unoptimized={true}
+//       />
+//       <h3 className="text-xl font-semibold mt-4 mx-4">{article.title}</h3>
+//       <p className="text-gray-500">{article.description}</p>
+//       <p className="text-gray-500">{article.content}</p>
+//     </div>
+//   );
+// };
+
+// // navbar
+// // const Navbar = ({ category, setCategory }) => {
+// //   return (
+// //     <div className="flex flex-wrap justify-center items-center gap-4 my-8">
+// //       {category.map((cat) => (
+// //         <button
+// //           key={cat}
+// //           className={`${
+// //             category === cat
+// //               ? "bg-blue-500 text-white"
+// //               : "bg-gray-200 text-gray-800 hover:bg-gray-300 "
+// //           } px-4 py-2 rounded-md`}
+// //           onClick={() => setCategory(cat)}
+// //         >
+// //           {cat}
+// //         </button>
+// //       ))}
+// //     </div>
+// //   );
+// // };
+
+// const Navbar = ({ categories, setCategory }) => {
+//   return (
+//     <div className="flex flex-wrap justify-center items-center gap-4 my-8">
+//       {categories.map((cat) => (
+//         <button
+//           key={cat}
+//           className={`${
+//             cat === setCategory // Fix comparison here
+//               ? "bg-blue-500 text-white"
+//               : "bg-gray-200 text-gray-800 hover:bg-gray-300 "
+//           } px-4 py-2 rounded-md`}
+//           onClick={() => setCategory(cat)}
+//         >
+//           {cat}
+//         </button>
+//       ))}
+//     </div>
+//   );
+// };
+
+// // create the main page
+// // const Page = () => {
+// //   const [news, setNews] = useState([]);
+// //   const [loading, setLoading] = useState(true);
+// //   const [category, setCategory] = useState("all");
+
+// //   useEffect(() => {
+// //     const query = category === "all" ? "" : `&category=${category}`;
+// //     fetch(newsApiUrl + query)
+// //       .then((response) => response.json())
+// //       .then((data) => {
+// //         setNews(data.articles || []);
+// //         setLoading(false);
+// //       })
+// //       .catch((error) => {
+// //         console.error(error);
+// //         setLoading(false);
+// //       });
+// //   }, [category]);
+// //   return (
+// //     <>
+// //       <Head>
+// //         <title>News App</title>
+// //         <meta
+// //           name="description"
+// //           content="A news app built with nextjs and taiwlind css"
+// //         />
+// //         <link rel="icon" href="/favicon.ico" />
+// //       </Head>
+
+// //       <main>
+// //         <h1>News app</h1>
+// //         <Navbar category={category} setCategory={setCategory} />
+// //         <div>
+// //           {loading ? (
+// //             <p>Loading...</p>
+// //           ) : news && news.length > 0 ? (
+// //             news.map((article) => (
+// //               <Link href={article.url} key={article.url}>
+// //                 <NewsCard article={article} />
+// //               </Link>
+// //             ))
+// //           ) : (
+// //             <p>No news found</p>
+// //           )}
+// //         </div>
+// //       </main>
+// //     </>
+// //   );
+// // };
+
+// const Page = () => {
+//   const [news, setNews] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [category, setCategory] = useState("all");
+//   const categories = ["all", "business", "sports", "technology"]; // Categories array
+
+//   useEffect(() => {
+//     const query = category === "all" ? "" : `&category=${category}`;
+//     fetch(newsApiUrl + query)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setNews(data.articles || []);
+//         setLoading(false);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//         setLoading(false);
+//       });
+//   }, [category]);
+
+//   return (
+//     <>
+//       <Head>
+//         <title>News App</title>
+//         <meta
+//           name="description"
+//           content="A news app built with nextjs and taiwlind css"
+//         />
+//         <link rel="icon" href="/favicon.ico" />
+//       </Head>
+
+//       <main>
+//         <h1>News app</h1>
+//         <Navbar categories={categories} setCategory={setCategory} /> {/* Pass categories as array */}
+//         <div>
+//           {loading ? (
+//             <p>Loading...</p>
+//           ) : news && news.length > 0 ? (
+//             news.map((article) => (
+//               <Link href={article.url} key={article.url}>
+//                 <NewsCard article={article} />
+//               </Link>
+//             ))
+//           ) : (
+//             <p>No news found</p>
+//           )}
+//         </div>
+//       </main>
+//     </>
+//   );
+// };
+
+// export default Page;
+// ;
+
+
+
+// "use client";
+// import React, { useState, useEffect } from "react";
+// import Head from "next/head";
+// import Image from "next/image";
+// import Link from "next/link";
+
+// // News API Configuration
+// const newsApi = "804b5ac5eb154a81ad4dc4b10ada6b7f";
+// const newsApiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApi}`;
+
+// // NewsCard Component
+// const NewsCard = ({ article }) => {
+//   return (
+//     <div className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+//       <Image
+//         src={article.urlToImage || "/default-image.jpg"}
+//         alt={article.title}
+//         width={400}
+//         height={250}
+//         className="w-full h-48 object-cover"
+//         unoptimized={true}
+//       />
+//       <div className="p-4">
+//         <h3 className="text-xl font-semibold text-gray-800 truncate">{article.title}</h3>
+//         <p className="text-gray-600 text-sm mt-2">{article.description}</p>
+//         <p className="text-gray-500 text-xs mt-2 line-clamp-3">{article.content}</p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// // Navbar Component
+// const Navbar = ({ categories, setCategory }) => {
+//   return (
+//     <div className="flex flex-wrap justify-center items-center gap-4 my-8">
+//       {categories.map((cat) => (
+//         <button
+//           key={cat}
+//           className={`${
+//             cat === setCategory
+//               ? "bg-blue-500 text-white"
+//               : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+//           } px-4 py-2 rounded-md text-sm font-medium transition-all duration-300`}
+//           onClick={() => setCategory(cat)}
+//         >
+//           {cat}
+//         </button>
+//       ))}
+//     </div>
+//   );
+// };
+
+// // Main Page Component
+// const Page = () => {
+//   const [news, setNews] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [category, setCategory] = useState("all");
+//   const categories = ["all", "business", "sports", "technology"]; // Categories array
+
+//   useEffect(() => {
+//     const query = category === "all" ? "" : `&category=${category}`;
+//     fetch(newsApiUrl + query)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setNews(data.articles || []);
+//         setLoading(false);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//         setLoading(false);
+//       });
+//   }, [category]);
+
+//   return (
+//     <>
+//       <Head>
+//         <title>News App</title>
+//         <meta name="description" content="A news app built with Next.js and Tailwind CSS" />
+//         <link rel="icon" href="/favicon.ico" />
+//       </Head>
+
+//       <main className="max-w-screen-lg mx-auto p-4">
+//         <h1 className="text-3xl font-bold text-center my-6">News App</h1>
+//         <Navbar categories={categories} setCategory={setCategory} />
+        
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//           {loading ? (
+//             <p className="col-span-full text-center text-xl">Loading...</p>
+//           ) : news && news.length > 0 ? (
+//             news.map((article) => (
+//               <Link href={article.url} key={article.url}>
+//                   <NewsCard article={article} />
+//               </Link>
+//             ))
+//           ) : (
+//             <p className="col-span-full text-center text-xl">No news found</p>
+//           )}
+//         </div>
+//       </main>
+//     </>
+//   );
+// };
+
+// export default Page;
+
+ 
+
+                </a>
+ 
+
+                <a>
+ 
+news.map((article) => (
+ 
+stylesheet
+ 
 { removeDuplicateData } from '@/utils
  
 Article from '@/components/Article'
