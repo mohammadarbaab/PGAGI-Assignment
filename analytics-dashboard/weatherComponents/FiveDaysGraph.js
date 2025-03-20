@@ -139,10 +139,11 @@ const FiveDaysGraph = ({ forecastData }) => {
   };
 
   return (
-    <div className="bg-gray-900 p-8 rounded-lg mb-8">
-      <h2 className="text-2xl font-bold mb-4">5-DAY Forecast Graph</h2>
-      <canvas ref={chartRef} width="400" height="200"></canvas>
-    </div>
+<div className="bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-700 p-8 rounded-lg shadow-lg mb-8 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+  <h2 className="text-3xl font-bold text-white mb-6">5-DAY Forecast Graph</h2>
+  <canvas ref={chartRef} width="400" height="200" className="rounded-lg border-2 border-white/20"></canvas>
+</div>
+
   );
 };
 

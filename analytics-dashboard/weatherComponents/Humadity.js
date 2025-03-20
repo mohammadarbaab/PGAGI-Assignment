@@ -10,11 +10,12 @@ const HumidityInfo = ({ humadity }) => {
     humadityDescription = "Normal Humadity";
   }
   return (
-    <div className="bg-gray-300 p-8 rounded-lg mb-3">
-      <h2 className="text-2xl font-bold mb-4">Humadity</h2>
-      <p className="text-xl mb-2 font-bold">{humadity}%</p>
-      <p className="text-lg">{humadityDescription}</p>
-    </div>
+<div className="bg-gradient-to-br from-blue-500 via-teal-500 to-green-500 p-8 rounded-lg shadow-lg mb-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+  <h2 className="text-3xl font-bold text-white mb-4">Humidity</h2>
+  <p className="text-4xl font-bold text-white mb-2">{humadity}%</p>
+  <p className="text-lg text-white/90">{humadityDescription}</p>
+</div>
+
   );
 };
 

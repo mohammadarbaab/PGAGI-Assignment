@@ -55,7 +55,7 @@ const HourlyWeather = ({ HourlyTemperatureData }) => {
   }, [HourlyTemperatureData]);
 
   return (
-    <div className="bg-gray-900 p-8 rounded-lg mb-8">
+    <div className="bg-gray-200 p-8 rounded-lg mb-8">
       <h2 className="text-2xl font-bold mb-4">Hourly Weather</h2>
       <canvas ref={chartRef} width="400" height="200"></canvas>
     </div>

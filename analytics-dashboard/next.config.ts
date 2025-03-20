@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true, // Optional, enables additional checks and warnings
-  swcMinify:true,
+  // swcMinify:true,
   images:{
     remotePatterns:[
       {
