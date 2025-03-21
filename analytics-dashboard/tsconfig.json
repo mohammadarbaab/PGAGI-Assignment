@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/pages/_error.tsx"
-, "pages/api/auth/[...nextAuth].js"  ],
+    "src/app/pages/_error.tsx",
+    "pages/api/auth/[...nextAuth].js",
+    "../Navbar.tsx"
+  ],
   "exclude": ["node_modules"]
 }

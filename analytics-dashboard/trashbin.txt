@@ -1,4 +1,4660 @@
 
+import ThemeToggle from "./ThemeToggle"
+ 
+
+            <ThemeToggle />
+ 
+import React from "react";
+import useTheme from "../../hooks/useTheme";
+
+const ThemeToggle = () => {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 transition-all"
+    >
+      {theme === "light" ? "🌙 Dark Mode" : "🌞 Light Mode"}
+    </button>
+  );
+};
+
+export default ThemeToggle;
+
+ 
+import { useEffect, useState } from "react";
+
+const useTheme = () => {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    // On initial load, check the stored theme in localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  return { theme, toggleTheme };
+};
+
+export default useTheme;
+
+ 
+module.exports = {
+  darkMode: 'class', // Enable class-based dark mode
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}', // Include all files in the pages directory
+    './components/**/*.{js,ts,jsx,tsx}', // Include all files in the components directory
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: "#090b0e",
+        secondary: "#1b1c21",
+        textColor: "#646464",
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+      },
+      boxShadow: {
+        glow: '0 0 20px rgba(59, 130, 246, 0.5)', // Glowing shadow for cards
+        'glow-dark': '0 0 20px rgba(99, 102, 241, 0.5)', // Glowing shadow for dark mode
+      },
+      transitionDuration: {
+        '500': '500ms',
+        '700': '700ms',
+      },
+      scale: {
+        '105': '1.05',
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
+};
+
+ 
+
+            {/* Theme Toggle Button */}
+            <ThemeToggle />
+ 
+
+import ThemeToggle from "../components/ThemeToggle"
+ 
+ <ThemeToggle />
+ 
+
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+ 
+../hooks/useTheme
+ 
+ation component
+ 
+
+import WeatherAnimation from './components/Weather3d'; // Import WeatherAnim
+ 
+
+<div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-teal-400 via-green-500 to-blue-600 rounded-3xl">
+        <main className="text-center flex-1 w-full px-6 py-8 max-w-screen-lg">
+          <h1 className="text-4xl font-semibold mb-6 text-white drop-shadow-md">
+            Welcome to the Weather App
+          </h1>
+
+          <div className="flex items-center justify-center mb-6 animate__animated animate__fadeInUp">
+            <input
+              type="text"
+              placeholder="Enter city name"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="p-3 w-80 md:w-96 bg-white text-gray-800 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+            />
+            <button
+              className="p-3 ml-4 cursor-pointer bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition ease-in-out duration-300"
+              onClick={fetchWeatherData}
+            >
+              Search
+            </button>
+          </div>
+
+          {errorAlert && <div className="text-red-500 mb-4">{errorAlert}</div>}
+
+          {currentWeather && forecastData && hourlyTemperatureData.length > 0 && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-lg shadow-teal-500/30">
+                <WeatherAnimation weatherCondition={currentWeather.weather[0].main} />
+                <Weather currentWeather={currentWeather} />
+              </div>
+
+              <div className="lg:col-span-1 bg-white p-2 rounded-lg shadow-lg shadow-teal-500/30">
+                <SunriseSunset
+                  sunrise={currentWeather.sys.sunrise}
+                  sunset={currentWeather.sys.sunset}
+                />
+                <WindSpeed windSpeed={currentWeather.wind.speed} />
+              </div>
+
+              <div className="lg:col-span-2 bg-white p-2 rounded-lg shadow-lg shadow-teal-500/30">
+                <HourlyWeather HourlyTemperatureData={hourlyTemperatureData} />
+              </div>
+
+              <div className="lg:col-span-1 bg-white p-2 rounded-lg shadow-lg shadow-teal-500/30">
+                <FeelsLike
+                  actualTemperature={currentWeather.main.temp}
+                  feelsLike={currentWeather.main.feels_like}
+                />
+                <HumidityInfo humidity={currentWeather.main.humidity} />
+                <VisibilityInfo visibility={currentWeather.visibility} />
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+ 
+
+
+    </>
+  );
+}
+ 
+
+    // Provide the store and session provider to the entire app
+ 
+// Your Redux store
+ 
+// Optional: Add your global styles here
+ 
+// Import SessionProvider
+ 
+ <li className="mb-4">
+              <Link
+                href="/news"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  ></path>
+                </svg>
+                Latest Movie
+              </Link>
+            </li>
+ 
+       <li className="mb-4">
+  <Link
+    href="/stock-check"
+    className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+  >
+    <svg
+      className="w-6 h-6 mr-2"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M3 12l2 2 4-4 6 6 8-8"
+      ></path>
+    </svg>
+    Stock Check
+  </Link>
+</li>
+          <li className="mb-4">
+  <Link
+    href="/news"
+    className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+  >
+    <svg
+      className="w-6 h-6 mr-2"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+      ></path>
+    </svg>
+    Latest Movie
+  </Link>
+</li>
+ 
+  <li className="mb-4">
+              <Link
+                href="/news"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  ></path>
+                </svg>
+                Latest Movie
+              </Link>
+            </li>
+ 
+            <li className="mb-4">
+              <Link
+                href="/news"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  ></path>
+                </svg>
+                Stock Check
+              </Link>
+              
+            </li>
+ 
+ <div className="bg-white/90 backdrop-blur-md p-8 mt-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20 flex flex-col justify-center items-center gap-4">
+            <h2 className="text-4xl font-bold mb-6 text-center text-blue-900">Top Movies</h2>
+            <div className="flex justify-center gap-8 mb-6">
+              {movies.map((movie) => (
+                <div className="w-48 text-center" key={movie.id}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    className="w-full h-auto rounded-lg"
+                  />
+                  <h3 className="mt-4 text-lg font-medium">{movie.title}</h3>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/movieApp"
+              className="text-blue-500 font-semibold hover:underline"
+            >
+              Explore More Movies
+            </Link>
+          </div>
+ 
+
+          <div className="text-center p-6 ">
+ 
+  <Link href="/movieApp">
+              <div className="bg-white/90 backdrop-blur-md p-8 mt-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  Stock Market
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Track the latest stock market trends.
+                </p>
+                {/* Stock Market Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/stock.png" // Replace with your image path
+                    alt="Stock Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+ 
+ <Link href="/movieApp">
+              <div className="bg-white/90 backdrop-blur-md p-8 mt-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  Stock Market
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Track the latest stock market trends.
+                </p>
+                {/* Stock Market Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/stock.png" // Replace with your image path
+                    alt="Stock Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+ 
+ <Link href="/movieApp">
+              <div className="bg-white/90 backdrop-blur-md p-8 mt-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  Stock Market
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Track the latest stock market trends.
+                </p>
+                {/* Stock Market Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/stock.png" // Replace with your image path
+                    alt="Stock Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+ 
+
+          </div>
+ 
+
+          <div className="w-full bg-white rounded-lg shadow-2xl shadow-blue-200 p-6 mb-8 mt-8">
+ 
+  <div className="w-full h-96">
+              <Line data={chartData} options={chartOptions} />
+            </div>
+ 
+   <div className="flex flex-row flex-wrap items-center justify-between">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                Weather Forecast
+              </h2>
+              <Link href="/movieApp">
+                <button className="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-semibold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg group hover:from-blue-600 hover:to-teal-500 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  {/* Button Text */}
+                  <span className="relative z-10 text-lg cursor-pointer">
+                    See Your City Weather
+                  </span>
+
+                  {/* Animated Background */}
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+
+                  {/* Ripple Effect */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-0 h-0 bg-white rounded-full opacity-0 group-hover:w-64 group-hover:h-64 group-hover:opacity-20 transition-all duration-700"></div>
+                  </div>
+                </button>
+              </Link>
+            </div>
+
+ 
+   <div className="w-full bg-white rounded-lg shadow-2xl shadow-blue-200 p-6 mb-8 mt-8">
+            <div className="flex flex-row flex-wrap items-center justify-between">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                Weather Forecast
+              </h2>
+              <Link href="/movieApp">
+                <button className="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-semibold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg group hover:from-blue-600 hover:to-teal-500 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  {/* Button Text */}
+                  <span className="relative z-10 text-lg cursor-pointer">
+                    See Your City Weather
+                  </span>
+
+                  {/* Animated Background */}
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+
+                  {/* Ripple Effect */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-0 h-0 bg-white rounded-full opacity-0 group-hover:w-64 group-hover:h-64 group-hover:opacity-20 transition-all duration-700"></div>
+                  </div>
+                </button>
+              </Link>
+            </div>
+
+ 
+../types/movie
+ 
+../components/SearchBar
+ 
+../components/MovieCard
+ 
+import React from "react";
+// import Navbar from "./components/Navbar";
+
+function movieApp() {
+  return (
+    <div>
+      {/* <Navbar /> */}
+      app
+    </div>
+  );
+}
+
+export default movieApp;
+
+ 
+
+NEXT_PUBLIC_API_KEY=be15689c6b7d44fa9b8bfd504e72f011
+ 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkUserAsync,
+  selectError,
+  selectLoggedInUser,
+  createUserAsync,
+} from "../store/auth/authSlice";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+export default function Auth() {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const user = useSelector(selectLoggedInUser);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const router = useRouter();
+
+  const [isSignUp, setIsSignUp] = useState(false); // State to toggle between login and signup
+
+  // Redirect to home if the user is already logged in
+  if (user) {
+    router.push("/");
+    return null;
+  }
+
+  const onSubmit = (data) => {
+    if (isSignUp) {
+      // Handle signup
+      dispatch(createUserAsync(data))
+        .unwrap()
+        .then(() => {
+          router.push("/"); // Redirect to home after successful signup
+        })
+        .catch((err) => {
+          console.error("Signup failed:", err);
+        });
+    } else {
+      // Handle login
+      dispatch(checkUserAsync({ email: data.email, password: data.password }));
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            {isSignUp ? "Create an Account" : "Welcome Back"}
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {isSignUp ? "Join us to get started" : "Sign in to your account"}
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email address
+            </label>
+            <div className="mt-1">
+              <input
+                id="email"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                    message: "Email is not valid",
+                  },
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                placeholder="Enter your email"
+              />
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <div className="mt-1">
+              <input
+                id="password"
+                type="password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: isSignUp
+                    ? {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      }
+                    : undefined,
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                placeholder="Enter your password"
+              />
+              {errors.password && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error.message}</p>
+            </div>
+          )}
+
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300"
+            >
+              {isSignUp ? "Sign Up" : "Sign In"}
+            </button>
+          </div>
+        </form>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+            <a
+              onClick={() => setIsSignUp(!isSignUp)} // Toggle between login and signup
+              className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+            >
+              {isSignUp ? "Log in" : "Sign up"}
+            </a>
+          </p>
+        </div>
+
+       
+      </div>
+    </div>
+  );
+}
+ 
+"use client";
+import Link from "next/link";
+// import { useState } from "react";
+import React, { useState } from "react";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+import Protected from "./components/Protected";
+// import { signOut, useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+const Dashboard = () => {
+  // const [selectedSymbol, setSele
+  // ctedSymbol] = useState(null);
+  const { data: session } = useSession();
+  const [chartData, setChartData] = useState({
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    datasets: [
+      {
+        label: "Temperature (°C)",
+        data: [22, 25, 27, 24, 23, 26, 28], // Sample temperature data
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0, "rgba(75, 192, 192, 0.4)");
+          gradient.addColorStop(1, "rgba(75, 192, 192, 0)");
+          return gradient;
+        },
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(75, 192, 192, 1)",
+        pointHoverRadius: 7,
+        fill: true, // Fill area under the line
+        tension: 0.4, // Smooth curve
+      },
+    ],
+  });
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          color: "#4A5568", // Gray color for legend text
+          font: {
+            size: 14,
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: "7 Days Temperature Forecast",
+        color: "#2D3748", // Dark gray color for title
+        font: {
+          size: 18,
+          weight: "bold",
+        },
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        titleColor: "#FFFFFF",
+        bodyColor: "#FFFFFF",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+        cornerRadius: 5,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false, // Hide x-axis grid lines
+        },
+        ticks: {
+          color: "#4A5568", // Gray color for x-axis labels
+          font: {
+            size: 14,
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: "#E2E8F0", // Light gray color for y-axis grid lines
+        },
+        ticks: {
+          color: "#4A5568", // Gray color for y-axis labels
+          font: {
+            size: 14,
+          },
+        },
+      },
+    },
+    animation: {
+      duration: 2000, // Animation duration in milliseconds
+      easing: "easeInOutQuad", // Smooth animation
+    },
+  };
+
+
+  return (
+    <>
+    <div>
+      {!session ? (
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+          <div className="text-center">
+            <p>Please sign in to access this page.</p>
+            <br />
+            <button
+              onClick={() => signIn()}
+              className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="min-h-screen bg-gray-100 p-8">
+          {/* Weather Graph (Full Width) */}
+          <div className="w-full bg-white rounded-lg shadow-2xl shadow-blue-200 p-6 mb-8">
+            <div className="flex flex-row flex-wrap items-center justify-between">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                Weather Forecast
+              </h2>
+              <Link href="/weather">
+                <button className="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-semibold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg group hover:from-blue-600 hover:to-teal-500 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  {/* Button Text */}
+                  <span className="relative z-10 text-lg cursor-pointer">
+                    See Your City Weather
+                  </span>
+
+                  {/* Animated Background */}
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+
+                  {/* Ripple Effect */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-0 h-0 bg-white rounded-full opacity-0 group-hover:w-64 group-hover:h-64 group-hover:opacity-20 transition-all duration-700"></div>
+                  </div>
+                </button>
+              </Link>
+            </div>
+
+            <div className="w-full h-96">
+              <Line data={chartData} options={chartOptions} />
+            </div>
+          </div>
+
+          {/* News and Stock Market Cards (Equal Width in One Row) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* News Card */}
+            <Link href="/news">
+              <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-purple-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                    ></path>
+                  </svg>
+                  News
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Stay updated with the latest news.
+                </p>
+                {/* News Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/news.png" // Replace with your image path
+                    alt="News"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+
+            {/* Stock Market Card */}
+            <Link href="/stockMarket">
+              <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  Stock Market
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Track the latest stock market trends.
+                </p>
+                {/* Stock Market Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/stock.png" // Replace with your image path
+                    alt="Stock Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex justify-center items-center mt-8">
+            <button
+              onClick={() => signOut()}
+              className="px-8 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+    </>
+  );
+};
+
+export default Dashboard;
+
+ 
+../components/Layout
+ 
+session={session}
+ 
+
+      <Protected>
+        <div className="min-h-screen bg-gray-100 p-8">
+          {/* Weather Graph (Full Width) */}
+          <div className="w-full bg-white rounded-lg shadow-2xl shadow-blue-200 p-6 mb-8">
+            <div className="flex flex-row flex-wrap items-center justify-between">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                Weather Forecast
+              </h2>
+              <Link href="/weather">
+                <button className="relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-semibold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-teal-400 rounded-lg group hover:from-blue-600 hover:to-teal-500 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  {/* Button Text */}
+                  <span className="relative z-10 text-lg cursor-pointer">
+                    See Your City Weather
+                  </span>
+
+                  {/* Animated Background */}
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+
+                  {/* Ripple Effect */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-0 h-0 bg-white rounded-full opacity-0 group-hover:w-64 group-hover:h-64 group-hover:opacity-20 transition-all duration-700"></div>
+                  </div>
+                </button>
+              </Link>
+            </div>
+
+            <div className="w-full h-96">
+              <Line data={chartData} options={chartOptions} />
+            </div>
+          </div>
+
+          {/* News and Stock Market Cards (Equal Width in One Row) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* News Card */}
+            <Link href="/news">
+              <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-purple-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                    ></path>
+                  </svg>
+                  News
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Stay updated with the latest news.
+                </p>
+                {/* News Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/news.png" // Replace with your image path
+                    alt="News"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+
+            {/* Stock Market Card */}
+            <Link href="/stockMarket">
+              <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20">
+                <h2 className="text-3xl font-bold mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-8 h-8 mr-2 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                  Stock Market
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Track the latest stock market trends.
+                </p>
+                {/* Stock Market Image */}
+                <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="images/stock.png" // Replace with your image path
+                    alt="Stock Market"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = "none"; // Hide the image if it fails to load
+                    }}
+                  />
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </Protected>
+ 
+
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=341653526095-pp16etvraejm8p23dej6sif8t0oa71g7.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+ 
+
+          <h1>Hello</h1>
+ 
+// import { useDispatch, useSelector } from "react-redux";
+// import { checkUserAsync, selectError, selectLoggedInUser } from "../store/auth/authSlice";
+// import { useForm } from "react-hook-form";
+// import { useRouter } from 'next/router';  // Import useRouter
+
+// export default function Login() {
+//   const dispatch = useDispatch();
+//   const error = useSelector(selectError);
+//   const user = useSelector(selectLoggedInUser);
+
+//   const { register, handleSubmit, formState: { errors } } = useForm();
+
+//   const router = useRouter(); // Initialize the router
+
+//   // Redirect to home if the user is already logged in
+//   if (user) {
+//     router.push("/");  // Redirect to the home page using Next.js's useRouter
+//     return null;  // Return nothing until the redirect happens
+//   }
+
+//   const onSubmit = (data) => {
+//     dispatch(checkUserAsync({ email: data.email, password: data.password }));
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br">
+//       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105">
+//         <div className="text-center">
+//           <h2 className="text-3xl font-extrabold text-gray-900">Welcome Back</h2>
+//           <p className="mt-2 text-sm text-gray-600">
+//             Sign in to your account
+//           </p>
+//         </div>
+
+//         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+//           <div>
+//             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+//               Email address
+//             </label>
+//             <div className="mt-1">
+//               <input
+//                 id="email"
+//                 type="email"
+//                 {...register("email", {
+//                   required: "Email is required",
+//                   pattern: {
+//                     value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+//                     message: "Email is not valid",
+//                   },
+//                 })}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+//                 placeholder="Enter your email"
+//               />
+//               {errors.email && (
+//                 <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+//               )}
+//             </div>
+//           </div>
+
+//           <div>
+//             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+//               Password
+//             </label>
+//             <div className="mt-1">
+//               <input
+//                 id="password"
+//                 type="password"
+//                 {...register("password", {
+//                   required: "Password is required",
+//                 })}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+//                 placeholder="Enter your password"
+//               />
+//               {errors.password && (
+//                 <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
+//               )}
+//             </div>
+//           </div>
+
+//           {error && (
+//             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+//               <p className="text-sm text-red-600">{error.message}</p>
+//             </div>
+//           )}
+
+//           <div>
+//             <button
+//               type="submit"
+//               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300"
+//             >
+//               Sign in
+//             </button>
+//           </div>
+//         </form>
+
+//         <div className="text-center">
+//           <p className="text-sm text-gray-600">
+//             Don't have an account?{" "}
+//             <a
+//               href="/signup"
+//               className="font-medium text-indigo-600 hover:text-indigo-500"
+//             >
+//               Sign up
+//             </a>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { checkUserAsync, selectError, selectLoggedInUser, createUserAsync } from "../store/auth/authSlice";
+// import { useForm } from "react-hook-form";
+// import { useRouter } from "next/router";
+// import { useState } from "react";
+
+// export default function Auth() {
+//   const dispatch = useDispatch();
+//   const error = useSelector(selectError);
+//   const user = useSelector(selectLoggedInUser);
+
+//   const { register, handleSubmit, formState: { errors } } = useForm();
+
+//   const router = useRouter();
+
+//   const [isSignUp, setIsSignUp] = useState(false);  // State to toggle between login and signup
+
+//   // Redirect to home if the user is already logged in
+//   if (user) {
+//     router.push("/");
+//     return null;
+//   }
+
+//   const onSubmit = (data) => {
+//     if (isSignUp) {
+//       // Handle signup
+//       dispatch(createUserAsync(data))
+//         .unwrap()
+//         .then(() => {
+//           router.push("/"); // Redirect to home after successful signup
+//         })
+//         .catch((err) => {
+//           console.error("Signup failed:", err);
+//         });
+//     } else {
+//       // Handle login
+//       dispatch(checkUserAsync({ email: data.email, password: data.password }));
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br">
+//       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105">
+//         <div className="text-center">
+//           <h2 className="text-3xl font-extrabold text-gray-900">{isSignUp ? "Create an Account" : "Welcome Back"}</h2>
+//           <p className="mt-2 text-sm text-gray-600">
+//             {isSignUp ? "Join us to get started" : "Sign in to your account"}
+//           </p>
+//         </div>
+
+//         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+//           <div>
+//             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+//               Email address
+//             </label>
+//             <div className="mt-1">
+//               <input
+//                 id="email"
+//                 type="email"
+//                 {...register("email", {
+//                   required: "Email is required",
+//                   pattern: {
+//                     value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+//                     message: "Email is not valid",
+//                   },
+//                 })}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+//                 placeholder="Enter your email"
+//               />
+//               {errors.email && (
+//                 <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+//               )}
+//             </div>
+//           </div>
+
+//           <div>
+//             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+//               Password
+//             </label>
+//             <div className="mt-1">
+//               <input
+//                 id="password"
+//                 type="password"
+//                 {...register("password", {
+//                   required: "Password is required",
+//                   minLength: isSignUp ? {
+//                     value: 6,
+//                     message: "Password must be at least 6 characters"
+//                   } : undefined
+//                 })}
+//                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+//                 placeholder="Enter your password"
+//               />
+//               {errors.password && (
+//                 <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
+//               )}
+//             </div>
+//           </div>
+
+//           {error && (
+//             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+//               <p className="text-sm text-red-600">{error.message}</p>
+//             </div>
+//           )}
+
+//           <div>
+//             <button
+//               type="submit"
+//               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300"
+//             >
+//               {isSignUp ? "Sign Up" : "Sign In"}
+//             </button>
+//           </div>
+//         </form>
+
+//         <div className="text-center">
+//           <p className="text-sm text-gray-600">
+//             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+//             <a
+//               onClick={() => setIsSignUp(!isSignUp)}  // Toggle between login and signup
+//               className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+//             >
+//               {isSignUp ? "Log in" : "Sign up"}
+//             </a>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkUserAsync,
+  selectError,
+  selectLoggedInUser,
+  createUserAsync,
+} from "../store/auth/authSlice";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+
+export default function Auth() {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const user = useSelector(selectLoggedInUser);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const router = useRouter();
+
+  const [isSignUp, setIsSignUp] = useState(false); // State to toggle between login and signup
+
+  // Redirect to home if the user is already logged in
+  if (user) {
+    router.push("/");
+    return null;
+  }
+
+  const onSubmit = (data) => {
+    if (isSignUp) {
+      // Handle signup
+      dispatch(createUserAsync(data))
+        .unwrap()
+        .then(() => {
+          router.push("/"); // Redirect to home after successful signup
+        })
+        .catch((err) => {
+          console.error("Signup failed:", err);
+        });
+    } else {
+      // Handle login
+      dispatch(checkUserAsync({ email: data.email, password: data.password }));
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900">
+            {isSignUp ? "Create an Account" : "Welcome Back"}
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {isSignUp ? "Join us to get started" : "Sign in to your account"}
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email address
+            </label>
+            <div className="mt-1">
+              <input
+                id="email"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                    message: "Email is not valid",
+                  },
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                placeholder="Enter your email"
+              />
+              {errors.email && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <div className="mt-1">
+              <input
+                id="password"
+                type="password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: isSignUp
+                    ? {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      }
+                    : undefined,
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300"
+                placeholder="Enter your password"
+              />
+              {errors.password && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error.message}</p>
+            </div>
+          )}
+
+          <div>
+            <button
+              type="submit"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300"
+            >
+              {isSignUp ? "Sign Up" : "Sign In"}
+            </button>
+          </div>
+        </form>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600">
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+            <a
+              onClick={() => setIsSignUp(!isSignUp)} // Toggle between login and signup
+              className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+            >
+              {isSignUp ? "Log in" : "Sign up"}
+            </a>
+          </p>
+        </div>
+        {/* Google Auth Button */}
+        <div className="text-center">
+          <button
+            onClick={() => signIn("google")}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300"
+          >
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ 
+// import Link from "next/link";
+// import { useState } from "react";
+
+// const Layout = ({ children }: { children: React.ReactNode }) => {
+//   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+//   const [image, setImage] = useState(null); // Initialize state to hold the image
+
+//   // Handle file selection
+//   const handleImageChange = (event) => {
+//     const file = event.target.files[0]; // Get the selected file
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setImage(reader.result); // Set the selected image URL to the state
+//       };
+//       reader.readAsDataURL(file); // Read the file as a data URL
+//     }
+//   };
+
+//   // Toggle side navbar on small screens
+//   const toggleSideNav = () => {
+//     setIsSideNavOpen(!isSideNavOpen);
+//   };
+
+//   return (
+//     <div className="min-h-screen flex bg-gradient-to-br from-blue-50 to-purple-50">
+//       {/* Sidebar */}
+//       <div
+//         className={`fixed w-64 bg-white/90 backdrop-blur-md p-4 h-screen shadow-2xl z-20 transform ${
+//           isSideNavOpen ? "translate-x-0" : "-translate-x-full"
+//         } md:translate-x-0 transition-transform duration-500 overflow-y-auto`}
+//       >
+//         <h2 className="text-2xl font-bold mb-8 text-gray-800 flex items-center">
+//           <svg
+//             className="w-8 h-8 mr-2 text-purple-600 cursor-pointer"
+//             fill="none"
+//             stroke="currentColor"
+//             viewBox="0 0 24 24"
+//             xmlns="http://www.w3.org/2000/svg"
+//             onClick={toggleSideNav}
+//           >
+//             <path
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               strokeWidth="2"
+//               d="M4 6h16M4 12h16m-7 6h7"
+//             ></path>
+//           </svg>
+//           <Link href="/">Dashboard</Link>
+//         </h2>
+//         <ul>
+//           <li className="mb-4">
+//             <Link
+//               href="/weather"
+//               className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//             >
+//               <svg
+//                 className="w-6 h-6 mr-2"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 viewBox="0 0 24 24"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+//                 ></path>
+//               </svg>
+//               Weather
+//             </Link>
+//           </li>
+//           <li className="mb-4">
+//             <Link
+//               href="/news"
+//               className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//             >
+//               <svg
+//                 className="w-6 h-6 mr-2"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 viewBox="0 0 24 24"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+//                 ></path>
+//               </svg>
+//               News
+//             </Link>
+//           </li>
+//         </ul>
+//       </div>
+
+//       {/* Main Content */}
+//       <div className="flex-1 flex flex-col md:ml-64">
+//         {/* Top Navbar */}
+//         <nav className="fixed w-full md:w-[calc(100%-16rem)] bg-white/80 backdrop-blur-md p-4 text-gray-800 flex justify-end items-center shadow-md z-10">
+//           {/* Hamburger Menu (visible on small screens) */}
+//           <button
+//             onClick={toggleSideNav}
+//             className="md:hidden p-2 focus:outline-none"
+//           >
+//             <svg
+//               className="w-6 h-6 text-gray-800"
+//               fill="none"
+//               stroke="currentColor"
+//               viewBox="0 0 24 24"
+//               xmlns="http://www.w3.org/2000/svg"
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 strokeWidth="2"
+//                 d="M4 6h16M4 12h16m-7 6h7"
+//               ></path>
+//             </svg>
+//           </button>
+
+//           {/* User Profile Icon */}
+//           <div className="flex items-center">
+//             {/* Image Selection Button */}
+//             <input
+//               type="file"
+//               accept="image/*"
+//               onChange={handleImageChange}
+//               className="hidden" // Hidden input
+//               id="fileInput"
+//             />
+//             <label htmlFor="fileInput">
+//               {/* User Profile Image */}
+//               <img
+//                 src={image || "https://via.placeholder.com/40"} // Display selected image or placeholder
+//                 alt="User"
+//                 className="w-10 h-10 rounded-full cursor-pointer"
+//               />
+//             </label>
+//           </div>
+//         </nav>
+
+//         {/* Content Area */}
+//         <div className="flex-1 p-8 mt-16 overflow-y-auto">{children}</div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Layout;
+
+// import { useDispatch, useSelector } from "react-redux";
+// import { signOutAsync, selectLoggedInUser } from "../../store/auth/authSlice"; // Select user data from Redux
+// import { useRouter } from 'next/router'; // For routing
+// import { useState } from "react";
+// import Link from "next/link";
+
+// const Layout = ({ children }) => {
+//   const dispatch = useDispatch();
+//   const router = useRouter();
+//   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+//   const [image, setImage] = useState(null); // User image state
+//   const user = useSelector(selectLoggedInUser); // Redux se user ka data le rahe hain
+
+//   // Logout function jo user ko logout karne par trigger hoga
+//   const handleLogout = () => {
+//     dispatch(signOutAsync()); // SignOut action dispatch
+//     router.push("/login"); // Redirect to login page
+//   };
+
+//   return (
+//     <div className="min-h-screen flex bg-gradient-to-br from-blue-50 to-purple-50">
+//       {/* Sidebar */}
+//       <div
+//         className={`fixed w-64 bg-white/90 backdrop-blur-md p-4 h-screen shadow-2xl z-20 transform ${
+//           isSideNavOpen ? "translate-x-0" : "-translate-x-full"
+//         } md:translate-x-0 transition-transform duration-500 overflow-y-auto`}
+//       >
+//         <h2 className="text-2xl font-bold mb-8 text-gray-800 flex items-center">
+//           <svg
+//             className="w-8 h-8 mr-2 text-purple-600 cursor-pointer"
+//             fill="none"
+//             stroke="currentColor"
+//             viewBox="0 0 24 24"
+//             xmlns="http://www.w3.org/2000/svg"
+//             onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggling sidebar visibility
+//           >
+//             <path
+//               strokeLinecap="round"
+//               strokeLinejoin="round"
+//               strokeWidth="2"
+//               d="M4 6h16M4 12h16m-7 6h7"
+//             ></path>
+//           </svg>
+//           <Link href="/">Dashboard</Link>
+//         </h2>
+//         <ul>
+//           <li className="mb-4">
+//             <Link
+//               href="/weather"
+//               className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//             >
+//               <svg
+//                 className="w-6 h-6 mr-2"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 viewBox="0 0 24 24"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+//                 ></path>
+//               </svg>
+//               Weather
+//             </Link>
+//           </li>
+//           <li className="mb-4">
+//             <Link
+//               href="/news"
+//               className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//             >
+//               <svg
+//                 className="w-6 h-6 mr-2"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 viewBox="0 0 24 24"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+//                 ></path>
+//               </svg>
+//               News
+//             </Link>
+//           </li>
+//         </ul>
+//       </div>
+
+//       {/* Main Content */}
+//       <div className="flex-1 flex flex-col md:ml-64">
+//         {/* Top Navbar */}
+//         <nav className="fixed w-full md:w-[calc(100%-16rem)] bg-white/80 backdrop-blur-md p-4 text-gray-800 flex justify-end items-center shadow-md z-10">
+//           {/* Hamburger Menu (visible on small screens) */}
+//           <button
+//             onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggle menu
+//             className="md:hidden p-2 focus:outline-none"
+//           >
+//             <svg
+//               className="w-6 h-6 text-gray-800"
+//               fill="none"
+//               stroke="currentColor"
+//               viewBox="0 0 24 24"
+//               xmlns="http://www.w3.org/2000/svg"
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 strokeWidth="2"
+//                 d="M4 6h16M4 12h16m-7 6h7"
+//               ></path>
+//             </svg>
+//           </button>
+
+//           {/* User Profile & Logout Button */}
+//           <div className="flex items-center">
+//             {/* If user is logged in, show logout button */}
+//             {user ? (
+//               <button
+//                 onClick={handleLogout}
+//                 className="text-gray-800 hover:text-purple-600 transition-colors duration-300 ml-4"
+//               >
+//                 Logout
+//               </button>
+//             ) : (
+//               <Link href="/login">
+//                   Login
+//               </Link>
+//             )}
+
+//             {/* User Image */}
+//             <input
+//               type="file"
+//               accept="image/*"
+//               onChange={(event) => {
+//                 const file = event.target.files[0];
+//                 if (file) {
+//                   const reader = new FileReader();
+//                   reader.onloadend = () => setImage(reader.result);
+//                   reader.readAsDataURL(file);
+//                 }
+//               }}
+//               className="hidden"
+//               id="fileInput"
+//             />
+//             <label htmlFor="fileInput">
+//               <img
+//                 src={image || "https://via.placeholder.com/40"}
+//                 alt="User"
+//                 className="w-10 h-10 rounded-full cursor-pointer"
+//               />
+//             </label>
+//           </div>
+//         </nav>
+
+//         {/* Content Area */}
+//         <div className="flex-1 p-8 mt-16 overflow-y-auto">{children}</div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Layout;
+
+
+
+
+
+
+
+
+
+
+// Ohkey
+// import { useDispatch, useSelector } from "react-redux";
+// import { signOutAsync, selectLoggedInUser } from "../../store/auth/authSlice"; // Select user data from Redux
+// import { useRouter } from "next/router"; // For routing
+// import { useState } from "react";
+// import Link from "next/link";
+// import { useSession, signIn, signOut } from "next-auth/client";
+
+
+// const Layout = ({ children }) => {
+//   const dispatch = useDispatch();
+//   const router = useRouter();
+//   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+//   const user = useSelector(selectLoggedInUser); // Redux se user ka data le rahe hain
+
+//   const [image, setImage] = useState(null); // Initialize state to hold the image
+//   const [session, loading] = useSession();
+
+//   if (loading) {
+//     return <p>Loading...</p>;
+//   }
+
+//   // Handle file selection
+//   const handleImageChange = (event) => {
+//     const file = event.target.files[0]; // Get the selected file
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setImage(reader.result); // Set the selected image URL to the state
+//       };
+//       reader.readAsDataURL(file); // Read the file as a data URL
+//     }
+//   };
+
+//   // Logout function jo user ko logout karne par trigger hoga
+//   const handleLogout = () => {
+//     dispatch(signOutAsync()); // SignOut action dispatch
+//     router.push("/login"); // Redirect to login page
+//   };
+
+//   // Router se current page ka path check karna
+//   const isLoginOrSignupPage =
+//     router.pathname === "/login" || router.pathname === "/signup";
+
+//   return (
+//     <div
+//       className={`min-h-screen flex ${
+//         isLoginOrSignupPage ? "" : "bg-gradient-to-br from-blue-50 to-purple-50"
+//       }`}
+//     >
+//       {/* Sidebar: Conditionally rendered */}
+//       {!isLoginOrSignupPage && (
+//         <div
+//           className={`fixed w-64 bg-white/90 backdrop-blur-md p-4 h-screen shadow-2xl z-20 transform ${
+//             isSideNavOpen ? "translate-x-0" : "-translate-x-full"
+//           } md:translate-x-0 transition-transform duration-500 overflow-y-auto`}
+//         >
+//           <h2 className="text-2xl font-bold mb-8 text-gray-800 flex items-center">
+//             <svg
+//               className="w-8 h-8 mr-2 text-purple-600 cursor-pointer"
+//               fill="none"
+//               stroke="currentColor"
+//               viewBox="0 0 24 24"
+//               xmlns="http://www.w3.org/2000/svg"
+//               onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggling sidebar visibility
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 strokeWidth="2"
+//                 d="M4 6h16M4 12h16m-7 6h7"
+//               ></path>
+//             </svg>
+//             <Link href="/">Dashboard</Link>
+//           </h2>
+//           <ul>
+//             <li className="mb-4">
+//               <Link
+//                 href="/weather"
+//                 className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//               >
+//                 <svg
+//                   className="w-6 h-6 mr-2"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   viewBox="0 0 24 24"
+//                   xmlns="http://www.w3.org/2000/svg"
+//                 >
+//                   <path
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                     strokeWidth="2"
+//                     d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+//                   ></path>
+//                 </svg>
+//                 Weather
+//               </Link>
+//             </li>
+//             <li className="mb-4">
+//               <Link
+//                 href="/news"
+//                 className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+//               >
+//                 <svg
+//                   className="w-6 h-6 mr-2"
+//                   fill="none"
+//                   stroke="currentColor"
+//                   viewBox="0 0 24 24"
+//                   xmlns="http://www.w3.org/2000/svg"
+//                 >
+//                   <path
+//                     strokeLinecap="round"
+//                     strokeLinejoin="round"
+//                     strokeWidth="2"
+//                     d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+//                   ></path>
+//                 </svg>
+//                 News
+//               </Link>
+//             </li>
+//           </ul>
+//         </div>
+//       )}
+
+//       {/* Main Content */}
+//       <div
+//         className={`flex-1 flex flex-col ${
+//           !isLoginOrSignupPage ? "md:ml-64" : ""
+//         }`}
+//       >
+//         {/* Top Navbar: Conditionally rendered */}
+//         {!isLoginOrSignupPage && (
+//           <nav className="fixed w-full md:w-[calc(100%-16rem)] bg-white/80 backdrop-blur-md p-4 text-gray-800 flex justify-end items-center shadow-md z-10 gap-3">
+//             {/* Hamburger Menu (visible on small screens) */}
+//             <button
+//               onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggle menu
+//               className="md:hidden p-2 focus:outline-none"
+//             >
+//               <svg
+//                 className="w-6 h-6 text-gray-800"
+//                 fill="none"
+//                 stroke="currentColor"
+//                 viewBox="0 0 24 24"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                   strokeWidth="2"
+//                   d="M4 6h16M4 12h16m-7 6h7"
+//                 ></path>
+//               </svg>
+//             </button>
+
+//             {/* User Profile & Logout Button */}
+
+//             <div className="flex items-center">
+//               {/* Image Selection Button */}
+//               <input
+//                 type="file"
+//                 accept="image/*"
+//                 onChange={handleImageChange}
+//                 className="hidden" // Hidden input
+//                 id="fileInput"
+//               />
+//               <label htmlFor="fileInput">
+//                 {/* User Profile Image */}
+//                 <img
+//                   src={image || "https://via.placeholder.com/40"} // Display selected image or placeholder
+//                   alt="User"
+//                   className="w-10 h-10 rounded-full cursor-pointer"
+//                 />
+//               </label>
+//             </div>
+//             <div className="flex items-center">
+//               {/* If user is logged in, show logout button */}
+//               {user ? (
+//                 <button
+//                   onClick={handleLogout}
+//                   className="text-black cursor-pointer hover:text-white hover:bg-blue-900 transition-colors duration-300 ml-4 bg-gray-300 px-4 py-1.5 rounded-2xl font-semibold "
+//                 >
+//                   Logout
+//                 </button>
+//               ) : (
+//                 <Link href="/login">Login</Link>
+//               )}
+//             </div>
+//           </nav>
+//         )}
+
+//         {/* Content Area */}
+//         <div className="flex-1 p-8 mt-16 overflow-y-auto">{children}</div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Layout;
+
+
+
+
+// import { useSession,signIn, signOut } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Link from "next/link";
+import { selectLoggedInUser, signOutAsync } from "../../store/auth/authSlice";
+
+const Layout = ({ children }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+  const user = useSelector(selectLoggedInUser); // Redux se user ka data le rahe hain
+  const [image, setImage] = useState(null); // Initialize state to hold the image
+  
+
+  // Handle file selection
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result); // Set the selected image URL to the state
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL
+    }
+  };
+
+  // Logout function jo user ko logout karne par trigger hoga
+  const handleLogout = () => {
+    dispatch(signOutAsync()); // Redux signOut action dispatch
+    signOut(); // NextAuth signOut
+    router.push("/login"); // Redirect to login page
+  };
+
+  // Router se current page ka path check karna
+  const isLoginOrSignupPage =
+    router.pathname === "/login" || router.pathname === "/signup";
+
+  return (
+    <div
+      className={`min-h-screen flex ${
+        isLoginOrSignupPage ? "" : "bg-gradient-to-br from-blue-50 to-purple-50"
+      }`}
+    >
+      {/* Sidebar: Conditionally rendered */}
+      {!isLoginOrSignupPage && (
+        <div
+          className={`fixed w-64 bg-white/90 backdrop-blur-md p-4 h-screen shadow-2xl z-20 transform ${
+            isSideNavOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-500 overflow-y-auto`}
+        >
+          <h2 className="text-2xl font-bold mb-8 text-gray-800 flex items-center">
+            <svg
+              className="w-8 h-8 mr-2 text-purple-600 cursor-pointer"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggling sidebar visibility
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+            <Link href="/">Dashboard</Link>
+          </h2>
+          <ul>
+            <li className="mb-4">
+              <Link
+                href="/weather"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  ></path>
+                </svg>
+                Weather
+              </Link>
+            </li>
+            <li className="mb-4">
+              <Link
+                href="/news"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                  ></path>
+                </svg>
+                News
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div
+        className={`flex-1 flex flex-col ${
+          !isLoginOrSignupPage ? "md:ml-64" : ""
+        }`}
+      >
+        {/* Top Navbar: Conditionally rendered */}
+        {!isLoginOrSignupPage && (
+          <nav className="fixed w-full md:w-[calc(100%-16rem)] bg-white/80 backdrop-blur-md p-4 text-gray-800 flex justify-end items-center shadow-md z-10 gap-3">
+            {/* Hamburger Menu (visible on small screens) */}
+            <button
+              onClick={() => setIsSideNavOpen(!isSideNavOpen)} // Toggle menu
+              className="md:hidden p-2 focus:outline-none"
+            >
+              <svg
+                className="w-6 h-6 text-gray-800"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+
+            {/* User Profile & Logout Button */}
+            <div className="flex items-center">
+              {/* Image Selection Button */}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden" // Hidden input
+                id="fileInput"
+              />
+              <label htmlFor="fileInput">
+                {/* User Profile Image */}
+                <img
+                  src={image || "https://via.placeholder.com/40"} // Display selected image or placeholder
+                  alt="User"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+              </label>
+            </div>
+
+            {/* Session-based Login/Logout Button */}
+            <div className="flex items-center">
+              {!session ? (
+                <button
+                  onClick={() => signIn("google")} // Google Auth ke liye signIn
+                  className="text-black cursor-pointer hover:text-white hover:bg-blue-900 transition-colors duration-300 ml-4 bg-gray-300 px-4 py-1.5 rounded-2xl font-semibold"
+                >
+                  Sign in with Google
+                </button>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <p className="text-sm text-gray-700">
+                    Signed in as {session.user.email}
+                  </p>
+                  <button
+                    onClick={handleLogout} // Redux aur NextAuth dono se logout
+                    className="text-black cursor-pointer hover:text-white hover:bg-blue-900 transition-colors duration-300 ml-4 bg-gray-300 px-4 py-1.5 rounded-2xl font-semibold"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </nav>
+        )}
+
+        {/* Content Area */}
+        <div className="flex-1 p-8 mt-16 overflow-y-auto">
+          {!session && (
+            <div className="text-center">
+              <p>Not signed in</p>
+              <button
+                onClick={() => signIn("google")}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Sign in with Google
+              </button>
+            </div>
+          )}
+          {session && children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Layout;
+ 
+ {/* Content Area */}
+        <div className="flex-1 p-8 mt-16 overflow-y-auto">
+          {!session && (
+            <div className="text-center">
+              <p>Not signed in</p>
+              <button
+                onClick={() => signIn("google")}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Sign in with Google
+              </button>
+            </div>
+          )}
+          {session && children}
+        </div>
+ 
+// const [session, loading] = useSession(); // NextAuth session
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+ 
+
+      </SessionProvider>
+ 
+
+      <SessionProvider session={pageProps.session}>
+ 
+npm install next-auth
+ 
+
+import { signIn } from "next-auth/client";
+ 
+
+import { useSession,  } from "next-auth/client";
+ 
+
+import { signOutAsync } from "@/path-to-your-redux-actions"; // Redux action import karein
+ 
+your-google-client-secret
+ 
+your-google-client-id
+ 
+
+GITHUB_ID=Ov23liCPePeZYytYJDGZ;
+GITHUB_SECRET=6836540db672d3e4ee03e06a9a85b751028a33fa;
+ 
+
+  "cart": [],
+  "orders": [
+    {
+      "id": "9f6b",
+      "items": [
+        {
+          "id": "8093",
+          "title": "Essence Mascara Lash Princess lala",
+          "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+          "category": "skincare",
+          "price": 12,
+          "discountPercentage": 1,
+          "rating": 0,
+          "stock": 5,
+          "tags": [
+            "beauty",
+            "mascara"
+          ],
+          "brand": "Foundation",
+          "sku": "RCH45Q1A",
+          "weight": 2,
+          "dimensions": {
+            "width": 23.17,
+            "height": 14.43,
+            "depth": 28.01
+          },
+          "warrantyInformation": "1 month warranty",
+          "shippingInformation": "Ships in 1 month",
+          "availabilityStatus": "Low Stock",
+          "reviews": [
+            {
+              "rating": 2,
+              "comment": "Very unhappy with my purchase!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "John Doe",
+              "reviewerEmail": "john.doe@x.dummyjson.com"
+            },
+            {
+              "rating": 2,
+              "comment": "Not as described!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Nolan Gonzalez",
+              "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+            },
+            {
+              "rating": 5,
+              "comment": "Very satisfied!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Scarlett Wright",
+              "reviewerEmail": "scarlett.wright@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "30 days return policy",
+          "minimumOrderQuantity": 24,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.618Z",
+            "updatedAt": "2024-05-23T08:56:21.618Z",
+            "barcode": "9164035109868",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
+            "https://static.beautytocare.com/cdn-cgi/image/width=1440,height=1200,f=auto/media/catalog/product//e/s/essence-lash-princess-curl-volume-mascara-12ml.jpg",
+            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
+            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
+          "deleted": false,
+          "productId": "1",
+          "quantity": 1,
+          "user": "8e1e"
+        }
+      ],
+      "totalAmount": 12,
+      "totalItems": 1,
+      "user": {
+        "id": "8e1e",
+        "email": "demo@gmail.com",
+        "password": "Demo@321",
+        "addresses": [
+          {
+            "name": "demo",
+            "email": "kazmiwrite@gmail.com",
+            "city": "mzn",
+            "state": "Uttar Pradesh",
+            "pinCode": "122",
+            "phone": "08057070230",
+            "street": "India"
+          }
+        ],
+        "role": "user"
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "name": "demo",
+        "email": "kazmiwrite@gmail.com",
+        "city": "mzn",
+        "state": "Uttar Pradesh",
+        "pinCode": "122",
+        "phone": "08057070230",
+        "street": "India"
+      },
+      "status": "pending"
+    },
+    {
+      "id": "f817",
+      "items": [
+        {
+          "id": "bfc1",
+          "title": "gshock is good",
+          "brand": "Boots",
+          "category": "smartphones",
+          "price": 2800,
+          "discountPercentage": 23,
+          "stock": 5,
+          "thumbnail": "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+          "images": [
+            "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+            "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg"
+          ],
+          "rating": 0,
+          "productId": "8f55",
+          "quantity": 1,
+          "user": "e87f"
+        }
+      ],
+      "totalAmount": 2156,
+      "totalItems": 1,
+      "user": {
+        "id": "e87f",
+        "email": "sufi@gmail.com",
+        "password": "Sufiya@321",
+        "addresses": [
+          {
+            "name": "Sufi",
+            "email": "kazmiwrite@gmail.com",
+            "phone": "08057070230",
+            "street": "Up Muzaffarnagar",
+            "city": "muzaffarnagar",
+            "state": "Uttar Pradesh",
+            "pinCode": "21212121"
+          }
+        ],
+        "role": "user"
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "name": "Sufi",
+        "email": "kazmiwrite@gmail.com",
+        "phone": "08057070230",
+        "street": "Up Muzaffarnagar",
+        "city": "muzaffarnagar",
+        "state": "Uttar Pradesh",
+        "pinCode": "21212121"
+      },
+      "status": "dispatched"
+    },
+    {
+      "id": "ad9b",
+      "items": [
+        {
+          "id": "194c",
+          "title": "Powder Canister fila",
+          "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
+          "category": "skincare",
+          "price": 14,
+          "discountPercentage": 18,
+          "rating": 0,
+          "stock": 5,
+          "tags": [
+            "beauty",
+            "face powder"
+          ],
+          "brand": "Foundation",
+          "sku": "9EN8WLT2",
+          "weight": 8,
+          "dimensions": {
+            "width": 24.16,
+            "height": 10.7,
+            "depth": 11.07
+          },
+          "warrantyInformation": "2 year warranty",
+          "shippingInformation": "Ships in 1-2 business days",
+          "availabilityStatus": "In Stock",
+          "reviews": [
+            {
+              "rating": 5,
+              "comment": "Very happy with my purchase!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Ethan Thompson",
+              "reviewerEmail": "ethan.thompson@x.dummyjson.com"
+            },
+            {
+              "rating": 4,
+              "comment": "Great value for money!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Levi Hicks",
+              "reviewerEmail": "levi.hicks@x.dummyjson.com"
+            },
+            {
+              "rating": 5,
+              "comment": "Highly impressed!",
+              "date": "2024-05-23T08:56:21.618Z",
+              "reviewerName": "Hazel Gardner",
+              "reviewerEmail": "hazel.gardner@x.dummyjson.com"
+            }
+          ],
+          "returnPolicy": "60 days return policy",
+          "minimumOrderQuantity": 25,
+          "meta": {
+            "createdAt": "2024-05-23T08:56:21.618Z",
+            "updatedAt": "2024-05-23T08:56:21.618Z",
+            "barcode": "0516267971277",
+            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+          },
+          "images": [
+            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+            "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+            "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png"
+          ],
+          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
+          "deleted": false,
+          "productId": "3",
+          "quantity": 2,
+          "user": "db6b"
+        }
+      ],
+      "totalAmount": 22,
+      "totalItems": 2,
+      "user": {
+        "id": "db6b",
+        "email": "kazmi@gmail.com",
+        "password": "Kazmi@321",
+        "addresses": [
+          {
+            "name": "kazmi",
+            "email": "kazmiwrite@gmail.com",
+            "phone": "08057070230",
+            "street": "Up Muzaffarnagar",
+            "city": "muzaffarnagar",
+            "state": "Uttar Pradesh",
+            "pinCode": "212121212"
+          }
+        ],
+        "role": "user"
+      },
+      "paymentMethod": "cash",
+      "selectedAddress": {
+        "name": "kazmi",
+        "email": "kazmiwrite@gmail.com",
+        "phone": "08057070230",
+        "street": "Up Muzaffarnagar",
+        "city": "muzaffarnagar",
+        "state": "Uttar Pradesh",
+        "pinCode": "212121212"
+      },
+      "status": "cencelled"
+    }
+  ]
+ 
+
+  "products": [
+    {
+      "id": "1",
+        "title": "Essence Mascara Lash Princess lala",
+        "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+        "category": "skincare",
+        "price": 12,
+        "discountPercentage": 1,
+        "rating": 0,
+        "stock": 5,
+      "tags": [
+        "beauty",
+        "mascara"
+      ],
+      "brand": "Foundation",
+      "sku": "RCH45Q1A",
+      "weight": 2,
+      "dimensions": {
+        "width": 23.17,
+        "height": 14.43,
+        "depth": 28.01
+      },
+      "warrantyInformation": "1 month warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "Low Stock",
+      "reviews": [
+        {
+          "rating": 2,
+          "comment": "Very unhappy with my purchase!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "John Doe",
+          "reviewerEmail": "john.doe@x.dummyjson.com"
+        },
+        {
+          "rating": 2,
+          "comment": "Not as described!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Nolan Gonzalez",
+          "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Scarlett Wright",
+          "reviewerEmail": "scarlett.wright@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 24,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.618Z",
+        "updatedAt": "2024-05-23T08:56:21.618Z",
+        "barcode": "9164035109868",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
+        "https://static.beautytocare.com/cdn-cgi/image/width=1440,height=1200,f=auto/media/catalog/product//e/s/essence-lash-princess-curl-volume-mascara-12ml.jpg",
+        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "2",
+      "title": "Eyeshadow Palette with Mirror",
+      "description": "The Eyeshadow Palette with Mirror offers a versatile range of eyeshadow shades for creating stunning eye looks. With a built-in mirror, it's convenient for on-the-go makeup application.",
+      "category": "beauty",
+      "price": 19.99,
+      "discountPercentage": 5.5,
+      "rating": 3.28,
+      "stock": 44,
+      "tags": [
+        "beauty",
+        "eyeshadow"
+      ],
+      "brand": "Glamour Beauty",
+      "sku": "MVCFH27F",
+      "weight": 3,
+      "dimensions": {
+        "width": 12.42,
+        "height": 8.63,
+        "depth": 29.13
+      },
+      "warrantyInformation": "1 year warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Liam Garcia",
+          "reviewerEmail": "liam.garcia@x.dummyjson.com"
+        },
+        {
+          "rating": 1,
+          "comment": "Very disappointed!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Nora Russell",
+          "reviewerEmail": "nora.russell@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Elena Baker",
+          "reviewerEmail": "elena.baker@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 32,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.618Z",
+        "updatedAt": "2024-05-23T08:56:21.618Z",
+        "barcode": "2817839095220",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "3",
+      "title": "Powder Canister fila",
+      "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
+      "category": "skincare",
+      "price": 14,
+      "discountPercentage": 18,
+      "rating": 0,
+      "stock": 5,
+      "tags": [
+        "beauty",
+        "face powder"
+      ],
+      "brand": "Foundation",
+      "sku": "9EN8WLT2",
+      "weight": 8,
+      "dimensions": {
+        "width": 24.16,
+        "height": 10.7,
+        "depth": 11.07
+      },
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Ethan Thompson",
+          "reviewerEmail": "ethan.thompson@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Levi Hicks",
+          "reviewerEmail": "levi.hicks@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Hazel Gardner",
+          "reviewerEmail": "hazel.gardner@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "60 days return policy",
+      "minimumOrderQuantity": 25,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.618Z",
+        "updatedAt": "2024-05-23T08:56:21.618Z",
+        "barcode": "0516267971277",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "4",
+      "title": "Red Lipstick",
+      "description": "The Red Lipstick is a classic and bold choice for adding a pop of color to your lips. With a creamy and pigmented formula, it provides a vibrant and long-lasting finish.",
+      "category": "beauty",
+      "price": 12.99,
+      "discountPercentage": 19.03,
+      "rating": 2.51,
+      "stock": 68,
+      "tags": [
+        "beauty",
+        "lipstick"
+      ],
+      "brand": "Chic Cosmetics",
+      "sku": "O5IF1NTA",
+      "weight": 5,
+      "dimensions": {
+        "width": 14.37,
+        "height": 13.94,
+        "depth": 14.6
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Leo Rivera",
+          "reviewerEmail": "leo.rivera@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Oscar Powers",
+          "reviewerEmail": "oscar.powers@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Carter Rivera",
+          "reviewerEmail": "carter.rivera@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 6,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "9444582199406",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Lipstick/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "5",
+      "title": "Red Nail Polish",
+      "description": "The Red Nail Polish offers a rich and glossy red hue for vibrant and polished nails. With a quick-drying formula, it provides a salon-quality finish at home.",
+      "category": "beauty",
+      "price": 8.99,
+      "discountPercentage": 2.46,
+      "rating": 3.91,
+      "stock": 71,
+      "tags": [
+        "beauty",
+        "nail polish"
+      ],
+      "brand": "Nail Couture",
+      "sku": "YUIIIP4W",
+      "weight": 9,
+      "dimensions": {
+        "width": 8.11,
+        "height": 10.89,
+        "depth": 29.06
+      },
+      "warrantyInformation": "1 year warranty",
+      "shippingInformation": "Ships in 1 week",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Leo Rivera",
+          "reviewerEmail": "leo.rivera@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Evan Reed",
+          "reviewerEmail": "evan.reed@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Evelyn Sanchez",
+          "reviewerEmail": "evelyn.sanchez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 46,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "3212847902461",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png",
+        "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Red%20Nail%20Polish/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "6",
+      "title": "Calvin Klein CK One",
+      "description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
+      "category": "fragrances",
+      "price": 49.99,
+      "discountPercentage": 0.32,
+      "rating": 4.85,
+      "stock": 17,
+      "tags": [
+        "fragrances",
+        "perfumes"
+      ],
+      "brand": "Calvin Klein",
+      "sku": "DZM2JQZE",
+      "weight": 5,
+      "dimensions": {
+        "width": 11.53,
+        "height": 14.44,
+        "depth": 6.81
+      },
+      "warrantyInformation": "5 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Sophia Brown",
+          "reviewerEmail": "sophia.brown@x.dummyjson.com"
+        },
+        {
+          "rating": 3,
+          "comment": "Very disappointed!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Madison Collins",
+          "reviewerEmail": "madison.collins@x.dummyjson.com"
+        },
+        {
+          "rating": 1,
+          "comment": "Poor quality!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Maya Reed",
+          "reviewerEmail": "maya.reed@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 20,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "2210136215089",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "7",
+      "title": "Chanel Coco Noir Eau De",
+      "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
+      "category": "fragrances",
+      "price": 129.99,
+      "discountPercentage": 18.64,
+      "rating": 2.76,
+      "stock": 41,
+      "tags": [
+        "fragrances",
+        "perfumes"
+      ],
+      "brand": "Chanel",
+      "sku": "K71HBCGS",
+      "weight": 4,
+      "dimensions": {
+        "width": 21.27,
+        "height": 28,
+        "depth": 11.89
+      },
+      "warrantyInformation": "1 week warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 1,
+          "comment": "Disappointing product!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Lincoln Kelly",
+          "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Lincoln Kelly",
+          "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Lucas Allen",
+          "reviewerEmail": "lucas.allen@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "60 days return policy",
+      "minimumOrderQuantity": 5,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "1435582999795",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "8",
+      "title": "Dior J'adore",
+      "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
+      "category": "fragrances",
+      "price": 89.99,
+      "discountPercentage": 17.44,
+      "rating": 3.31,
+      "stock": 91,
+      "tags": [
+        "fragrances",
+        "perfumes"
+      ],
+      "brand": "Dior",
+      "sku": "E70NB03B",
+      "weight": 10,
+      "dimensions": {
+        "width": 21.51,
+        "height": 7,
+        "depth": 26.51
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Fast shipping!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Zoe Nicholson",
+          "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Addison Wright",
+          "reviewerEmail": "addison.wright@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Clara Berry",
+          "reviewerEmail": "clara.berry@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 8,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "0887083199279",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "9",
+      "title": "Dolce Shine Eau de",
+      "description": "Dolce Shine by Dolce & Gabbana is a vibrant and fruity fragrance, featuring notes of mango, jasmine, and blonde woods. It's a joyful and youthful scent.",
+      "category": "fragrances",
+      "price": 69.99,
+      "discountPercentage": 11.47,
+      "rating": 2.68,
+      "stock": 3,
+      "tags": [
+        "fragrances",
+        "perfumes"
+      ],
+      "brand": "Dolce & Gabbana",
+      "sku": "1NBFK980",
+      "weight": 5,
+      "dimensions": {
+        "width": 17,
+        "height": 24.57,
+        "depth": 13.3
+      },
+      "warrantyInformation": "5 year warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "Low Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Xavier Wright",
+          "reviewerEmail": "xavier.wright@x.dummyjson.com"
+        },
+        {
+          "rating": 1,
+          "comment": "Poor quality!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Mila Hernandez",
+          "reviewerEmail": "mila.hernandez@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.619Z",
+          "reviewerName": "Sophia Brown",
+          "reviewerEmail": "sophia.brown@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 9,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.619Z",
+        "updatedAt": "2024-05-23T08:56:21.619Z",
+        "barcode": "1939383392674",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dolce%20Shine%20Eau%20de/thumbnail.png"
+    },
+    {
+      "id": "10",
+      "title": "Gucci Bloom Eau de",
+      "description": "Gucci Bloom by Gucci is a floral and captivating fragrance, with notes of tuberose, jasmine, and Rangoon creeper. It's a modern and romantic scent.",
+      "category": "fragrances",
+      "price": 79.99,
+      "discountPercentage": 8.9,
+      "rating": 2.69,
+      "stock": 93,
+      "tags": [
+        "fragrances",
+        "perfumes"
+      ],
+      "brand": "Gucci",
+      "sku": "FFKZ6HOF",
+      "weight": 10,
+      "dimensions": {
+        "width": 22.28,
+        "height": 17.81,
+        "depth": 27.18
+      },
+      "warrantyInformation": "No warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Aria Parker",
+          "reviewerEmail": "aria.parker@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Natalie Harris",
+          "reviewerEmail": "natalie.harris@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Fast shipping!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ava Harris",
+          "reviewerEmail": "ava.harris@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 10,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "8232190382069",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Gucci%20Bloom%20Eau%20de/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Gucci%20Bloom%20Eau%20de/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Gucci%20Bloom%20Eau%20de/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Gucci%20Bloom%20Eau%20de/thumbnail.png"
+    },
+    {
+      "id": "11",
+      "title": "Annibale Colombo Bed",
+      "description": "The Annibale Colombo Bed is a luxurious and elegant bed frame, crafted with high-quality materials for a comfortable and stylish bedroom.",
+      "category": "furniture",
+      "price": 1899.99,
+      "discountPercentage": 0.29,
+      "rating": 4.14,
+      "stock": 47,
+      "tags": [
+        "furniture",
+        "beds"
+      ],
+      "brand": "Annibale Colombo",
+      "sku": "4KMDTZWF",
+      "weight": 3,
+      "dimensions": {
+        "width": 28.75,
+        "height": 26.88,
+        "depth": 24.47
+      },
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Julian Newton",
+          "reviewerEmail": "julian.newton@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Madison Collins",
+          "reviewerEmail": "madison.collins@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Clara Berry",
+          "reviewerEmail": "clara.berry@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "7113807059215",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/1.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/2.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Bed/thumbnail.png"
+    },
+    {
+      "id": "12",
+      "title": "Annibale Colombo Sofa",
+      "description": "The Annibale Colombo Sofa is a sophisticated and comfortable seating option, featuring exquisite design and premium upholstery for your living room.",
+      "category": "furniture",
+      "price": 2499.99,
+      "discountPercentage": 18.54,
+      "rating": 3.08,
+      "stock": 16,
+      "tags": [
+        "furniture",
+        "sofas"
+      ],
+      "brand": "Annibale Colombo",
+      "sku": "LUU95CQP",
+      "weight": 3,
+      "dimensions": {
+        "width": 20.97,
+        "height": 19.11,
+        "depth": 25.81
+      },
+      "warrantyInformation": "1 month warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Tyler Davis",
+          "reviewerEmail": "tyler.davis@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Hannah Robinson",
+          "reviewerEmail": "hannah.robinson@x.dummyjson.com"
+        },
+        {
+          "rating": 3,
+          "comment": "Waste of money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Madison Collins",
+          "reviewerEmail": "madison.collins@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "0426785817074",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/1.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/2.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Annibale%20Colombo%20Sofa/thumbnail.png"
+    },
+    {
+      "id": "13",
+      "title": "Bedside Table African Cherry",
+      "description": "The Bedside Table in African Cherry is a stylish and functional addition to your bedroom, providing convenient storage space and a touch of elegance.",
+      "category": "furniture",
+      "price": 299.99,
+      "discountPercentage": 9.58,
+      "rating": 4.48,
+      "stock": 16,
+      "tags": [
+        "furniture",
+        "bedside tables"
+      ],
+      "brand": "Furniture Co.",
+      "sku": "OWPLTZYX",
+      "weight": 10,
+      "dimensions": {
+        "width": 25.43,
+        "height": 20.2,
+        "depth": 24.95
+      },
+      "warrantyInformation": "6 months warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "John Doe",
+          "reviewerEmail": "john.doe@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Avery Carter",
+          "reviewerEmail": "avery.carter@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Evelyn Sanchez",
+          "reviewerEmail": "evelyn.sanchez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 5,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "2913244159666",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/furniture/Bedside%20Table%20African%20Cherry/1.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Bedside%20Table%20African%20Cherry/2.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Bedside%20Table%20African%20Cherry/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Bedside%20Table%20African%20Cherry/thumbnail.png"
+    },
+    {
+      "id": "14",
+      "title": "Knoll Saarinen Executive Conference Chair",
+      "description": "The Knoll Saarinen Executive Conference Chair is a modern and ergonomic chair, perfect for your office or conference room with its timeless design.",
+      "category": "furniture",
+      "price": 499.99,
+      "discountPercentage": 15.23,
+      "rating": 4.11,
+      "stock": 47,
+      "tags": [
+        "furniture",
+        "office chairs"
+      ],
+      "brand": "Knoll",
+      "sku": "RKHVJ4FE",
+      "weight": 3,
+      "dimensions": {
+        "width": 16.59,
+        "height": 21.46,
+        "depth": 29.07
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships in 3-5 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Leah Gutierrez",
+          "reviewerEmail": "leah.gutierrez@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Nolan Gonzalez",
+          "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
+        },
+        {
+          "rating": 2,
+          "comment": "Waste of money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Stella Morris",
+          "reviewerEmail": "stella.morris@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 5,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "0726316339746",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/1.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/2.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Knoll%20Saarinen%20Executive%20Conference%20Chair/thumbnail.png"
+    },
+    {
+      "id": "15",
+      "title": "Wooden Bathroom Sink With Mirror",
+      "description": "The Wooden Bathroom Sink with Mirror is a unique and stylish addition to your bathroom, featuring a wooden sink countertop and a matching mirror.",
+      "category": "furniture",
+      "price": 799.99,
+      "discountPercentage": 11.22,
+      "rating": 3.26,
+      "stock": 95,
+      "tags": [
+        "furniture",
+        "bathroom"
+      ],
+      "brand": "Bath Trends",
+      "sku": "7OLTIEVO",
+      "weight": 6,
+      "dimensions": {
+        "width": 7.32,
+        "height": 22.64,
+        "depth": 12.37
+      },
+      "warrantyInformation": "6 months warranty",
+      "shippingInformation": "Ships in 3-5 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Charlotte Lopez",
+          "reviewerEmail": "charlotte.lopez@x.dummyjson.com"
+        },
+        {
+          "rating": 1,
+          "comment": "Would not recommend!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "William Gonzalez",
+          "reviewerEmail": "william.gonzalez@x.dummyjson.com"
+        },
+        {
+          "rating": 2,
+          "comment": "Not worth the price!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ava Harrison",
+          "reviewerEmail": "ava.harrison@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "7839797529453",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/1.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/2.png",
+        "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/3.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/furniture/Wooden%20Bathroom%20Sink%20With%20Mirror/thumbnail.png"
+    },
+    {
+      "id": "16",
+      "title": "Apple",
+      "description": "Fresh and crisp apples, perfect for snacking or incorporating into various recipes.",
+      "category": "groceries",
+      "price": 1.99,
+      "discountPercentage": 1.97,
+      "rating": 2.96,
+      "stock": 9,
+      "tags": [
+        "fruits"
+      ],
+      "sku": "QTROUV79",
+      "weight": 8,
+      "dimensions": {
+        "width": 8.29,
+        "height": 5.58,
+        "depth": 12.41
+      },
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Logan Lee",
+          "reviewerEmail": "logan.lee@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Elena Long",
+          "reviewerEmail": "elena.long@x.dummyjson.com"
+        },
+        {
+          "rating": 1,
+          "comment": "Not as described!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Grayson Coleman",
+          "reviewerEmail": "grayson.coleman@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "60 days return policy",
+      "minimumOrderQuantity": 44,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "2517819903837",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Apple/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Apple/thumbnail.png"
+    },
+    {
+      "id": "17",
+      "title": "Beef Steak",
+      "description": "High-quality beef steak, great for grilling or cooking to your preferred level of doneness.",
+      "category": "groceries",
+      "price": 12.99,
+      "discountPercentage": 17.99,
+      "rating": 2.83,
+      "stock": 96,
+      "tags": [
+        "meat"
+      ],
+      "sku": "BWWA2MSO",
+      "weight": 9,
+      "dimensions": {
+        "width": 23.35,
+        "height": 13.48,
+        "depth": 26.4
+      },
+      "warrantyInformation": "1 month warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ethan Martinez",
+          "reviewerEmail": "ethan.martinez@x.dummyjson.com"
+        },
+        {
+          "rating": 3,
+          "comment": "Disappointing product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Owen Fisher",
+          "reviewerEmail": "owen.fisher@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Scarlett Wright",
+          "reviewerEmail": "scarlett.wright@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 21,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "8335515097879",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Beef%20Steak/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Beef%20Steak/thumbnail.png"
+    },
+    {
+      "id": "18",
+      "title": "Cat Food",
+      "description": "Nutritious cat food formulated to meet the dietary needs of your feline friend.",
+      "category": "groceries",
+      "price": 8.99,
+      "discountPercentage": 9.57,
+      "rating": 2.88,
+      "stock": 13,
+      "tags": [
+        "pet supplies",
+        "cat food"
+      ],
+      "sku": "C3F8QN6O",
+      "weight": 9,
+      "dimensions": {
+        "width": 15.4,
+        "height": 13.97,
+        "depth": 25.13
+      },
+      "warrantyInformation": "3 months warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Mateo Bennett",
+          "reviewerEmail": "mateo.bennett@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Aurora Barnes",
+          "reviewerEmail": "aurora.barnes@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ellie Stewart",
+          "reviewerEmail": "ellie.stewart@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 48,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "5503491330693",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Cat%20Food/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Cat%20Food/thumbnail.png"
+    },
+    {
+      "id": "19",
+      "title": "Chicken Meat",
+      "description": "Fresh and tender chicken meat, suitable for various culinary preparations.",
+      "category": "groceries",
+      "price": 9.99,
+      "discountPercentage": 10.46,
+      "rating": 4.61,
+      "stock": 69,
+      "tags": [
+        "meat"
+      ],
+      "sku": "G5YEHW7B",
+      "weight": 7,
+      "dimensions": {
+        "width": 15.96,
+        "height": 29.24,
+        "depth": 26.25
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Sophia Jones",
+          "reviewerEmail": "sophia.jones@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Maya Reed",
+          "reviewerEmail": "maya.reed@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Harper Turner",
+          "reviewerEmail": "harper.turner@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 46,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "0966223559510",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Chicken%20Meat/1.png",
+        "https://cdn.dummyjson.com/products/images/groceries/Chicken%20Meat/2.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Chicken%20Meat/thumbnail.png"
+    },
+    {
+      "id": "20",
+      "title": "Cooking Oil",
+      "description": "Versatile cooking oil suitable for frying, sautéing, and various culinary applications.",
+      "category": "groceries",
+      "price": 4.99,
+      "discountPercentage": 18.89,
+      "rating": 4.01,
+      "stock": 22,
+      "tags": [
+        "cooking essentials"
+      ],
+      "sku": "Q6ZP1UY8",
+      "weight": 8,
+      "dimensions": {
+        "width": 8.18,
+        "height": 27.45,
+        "depth": 27.88
+      },
+      "warrantyInformation": "Lifetime warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Mason Parker",
+          "reviewerEmail": "mason.parker@x.dummyjson.com"
+        },
+        {
+          "rating": 3,
+          "comment": "Poor quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Jonathan Pierce",
+          "reviewerEmail": "jonathan.pierce@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Alexander Hernandez",
+          "reviewerEmail": "alexander.hernandez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "60 days return policy",
+      "minimumOrderQuantity": 2,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "6707669443381",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Cooking%20Oil/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Cooking%20Oil/thumbnail.png"
+    },
+    {
+      "id": "21",
+      "title": "Cucumber",
+      "description": "Crisp and hydrating cucumbers, ideal for salads, snacks, or as a refreshing side.",
+      "category": "groceries",
+      "price": 1.49,
+      "discountPercentage": 11.44,
+      "rating": 4.71,
+      "stock": 22,
+      "tags": [
+        "vegetables"
+      ],
+      "sku": "6KGF2K6Z",
+      "weight": 9,
+      "dimensions": {
+        "width": 11.04,
+        "height": 20.5,
+        "depth": 8.18
+      },
+      "warrantyInformation": "5 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Elijah Hill",
+          "reviewerEmail": "elijah.hill@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Fast shipping!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Liam Garcia",
+          "reviewerEmail": "liam.garcia@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ella Cook",
+          "reviewerEmail": "ella.cook@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 7,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "2597004869708",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Cucumber/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Cucumber/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "22",
+      "title": "Dog Food",
+      "description": "Specially formulated dog food designed to provide essential nutrients for your canine companion.",
+      "category": "groceries",
+      "price": 10.99,
+      "discountPercentage": 18.15,
+      "rating": 2.74,
+      "stock": 40,
+      "tags": [
+        "pet supplies",
+        "dog food"
+      ],
+      "sku": "A6QRCH37",
+      "weight": 2,
+      "dimensions": {
+        "width": 29.39,
+        "height": 29.77,
+        "depth": 20.54
+      },
+      "warrantyInformation": "1 year warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Leo Rivera",
+          "reviewerEmail": "leo.rivera@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Highly recommended!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Alexander Jones",
+          "reviewerEmail": "alexander.jones@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Addison Wright",
+          "reviewerEmail": "addison.wright@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 29,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "7957222289508",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Dog%20Food/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Dog%20Food/thumbnail.png"
+    },
+    {
+      "id": "23",
+      "title": "Eggs",
+      "description": "Fresh eggs, a versatile ingredient for baking, cooking, or breakfast.",
+      "category": "groceries",
+      "price": 2.99,
+      "discountPercentage": 5.8,
+      "rating": 4.46,
+      "stock": 10,
+      "tags": [
+        "dairy"
+      ],
+      "sku": "YA617RI7",
+      "weight": 4,
+      "dimensions": {
+        "width": 12.3,
+        "height": 10.99,
+        "depth": 15.53
+      },
+      "warrantyInformation": "3 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 2,
+          "comment": "Very unhappy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Mateo Perez",
+          "reviewerEmail": "mateo.perez@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Cameron Perez",
+          "reviewerEmail": "cameron.perez@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Aurora Barnes",
+          "reviewerEmail": "aurora.barnes@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 43,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "7095702028776",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Eggs/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Eggs/thumbnail.png"
+    },
+    {
+      "id": "24",
+      "title": "Fish Steak",
+      "description": "Quality fish steak, suitable for grilling, baking, or pan-searing.",
+      "category": "groceries",
+      "price": 14.99,
+      "discountPercentage": 7,
+      "rating": 4.83,
+      "stock": 99,
+      "tags": [
+        "seafood"
+      ],
+      "sku": "XNIH1MTA",
+      "weight": 8,
+      "dimensions": {
+        "width": 20.14,
+        "height": 8.4,
+        "depth": 10.01
+      },
+      "warrantyInformation": "1 year warranty",
+      "shippingInformation": "Ships in 1 month",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Michael Johnson",
+          "reviewerEmail": "michael.johnson@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Julian Newton",
+          "reviewerEmail": "julian.newton@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Lila Hudson",
+          "reviewerEmail": "lila.hudson@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 49,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "4250692197342",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Fish%20Steak/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Fish%20Steak/thumbnail.png"
+    },
+    {
+      "id": "25",
+      "title": "Green Bell Pepper",
+      "description": "Fresh and vibrant green bell pepper, perfect for adding color and flavor to your dishes.",
+      "category": "groceries",
+      "price": 1.29,
+      "discountPercentage": 15.5,
+      "rating": 4.28,
+      "stock": 89,
+      "tags": [
+        "vegetables"
+      ],
+      "sku": "HU7S7VQ0",
+      "weight": 7,
+      "dimensions": {
+        "width": 7.32,
+        "height": 14.31,
+        "depth": 21.38
+      },
+      "warrantyInformation": "5 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Maya Reed",
+          "reviewerEmail": "maya.reed@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Madison Collins",
+          "reviewerEmail": "madison.collins@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Would buy again!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ethan Thompson",
+          "reviewerEmail": "ethan.thompson@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "7583442707568",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Green%20Bell%20Pepper/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Green%20Bell%20Pepper/thumbnail.png"
+    },
+    {
+      "id": "26",
+      "title": "Green Chili Pepper",
+      "description": "Spicy green chili pepper, ideal for adding heat to your favorite recipes.",
+      "category": "groceries",
+      "price": 0.99,
+      "discountPercentage": 18.51,
+      "rating": 4.43,
+      "stock": 8,
+      "tags": [
+        "vegetables"
+      ],
+      "sku": "Y4RM3JCB",
+      "weight": 2,
+      "dimensions": {
+        "width": 18.67,
+        "height": 21.17,
+        "depth": 25.26
+      },
+      "warrantyInformation": "No warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 2,
+          "comment": "Disappointing product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Mateo Bennett",
+          "reviewerEmail": "mateo.bennett@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Natalie Price",
+          "reviewerEmail": "natalie.price@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Avery Barnes",
+          "reviewerEmail": "avery.barnes@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "30 days return policy",
+      "minimumOrderQuantity": 43,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "8400326844874",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Green%20Chili%20Pepper/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Green%20Chili%20Pepper/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "27",
+      "title": "Honey Jar",
+      "description": "Pure and natural honey in a convenient jar, perfect for sweetening beverages or drizzling over food.",
+      "category": "groceries",
+      "price": 6.99,
+      "discountPercentage": 1.91,
+      "rating": 3.5,
+      "stock": 25,
+      "tags": [
+        "condiments"
+      ],
+      "sku": "BTBNIIOU",
+      "weight": 9,
+      "dimensions": {
+        "width": 26.53,
+        "height": 27.11,
+        "depth": 6.63
+      },
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships overnight",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Fast shipping!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Nicholas Bailey",
+          "reviewerEmail": "nicholas.bailey@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Awesome product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Gabriel Hayes",
+          "reviewerEmail": "gabriel.hayes@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "James Garcia",
+          "reviewerEmail": "james.garcia@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 1,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "0668665656044",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Honey%20Jar/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Honey%20Jar/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "28",
+      "title": "Ice Cream",
+      "description": "Creamy and delicious ice cream, available in various flavors for a delightful treat.",
+      "category": "groceries",
+      "price": 5.49,
+      "discountPercentage": 7.58,
+      "rating": 3.77,
+      "stock": 76,
+      "tags": [
+        "desserts"
+      ],
+      "sku": "VEZMU1EQ",
+      "weight": 5,
+      "dimensions": {
+        "width": 17.66,
+        "height": 24.49,
+        "depth": 25.98
+      },
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships in 2 weeks",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Elena Baker",
+          "reviewerEmail": "elena.baker@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Madeline Simpson",
+          "reviewerEmail": "madeline.simpson@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Caleb Nelson",
+          "reviewerEmail": "caleb.nelson@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "No return policy",
+      "minimumOrderQuantity": 19,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "9603960319256",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Ice%20Cream/1.png",
+        "https://cdn.dummyjson.com/products/images/groceries/Ice%20Cream/2.png",
+        "https://cdn.dummyjson.com/products/images/groceries/Ice%20Cream/3.png",
+        "https://cdn.dummyjson.com/products/images/groceries/Ice%20Cream/4.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Ice%20Cream/thumbnail.png"
+    },
+    {
+      "id": "29",
+      "title": "Juice",
+      "description": "Refreshing fruit juice, packed with vitamins and great for staying hydrated.",
+      "category": "groceries",
+      "price": 3.99,
+      "discountPercentage": 5.45,
+      "rating": 3.41,
+      "stock": 99,
+      "tags": [
+        "beverages"
+      ],
+      "sku": "M2K19S06",
+      "weight": 2,
+      "dimensions": {
+        "width": 8.97,
+        "height": 12.26,
+        "depth": 15.05
+      },
+      "warrantyInformation": "1 week warranty",
+      "shippingInformation": "Ships in 1-2 business days",
+      "availabilityStatus": "In Stock",
+      "reviews": [
+        {
+          "rating": 4,
+          "comment": "Very satisfied!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Leo Rivera",
+          "reviewerEmail": "leo.rivera@x.dummyjson.com"
+        },
+        {
+          "rating": 2,
+          "comment": "Not worth the price!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Ethan Martinez",
+          "reviewerEmail": "ethan.martinez@x.dummyjson.com"
+        },
+        {
+          "rating": 4,
+          "comment": "Excellent quality!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Max Parker",
+          "reviewerEmail": "max.parker@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "90 days return policy",
+      "minimumOrderQuantity": 26,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "8546824122355",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Juice/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Juice/thumbnail.png"
+    },
+    {
+      "id": "30",
+      "title": "Kiwi",
+      "description": "Nutrient-rich kiwi, perfect for snacking or adding a tropical twist to your dishes.",
+      "category": "groceries",
+      "price": 2.49,
+      "discountPercentage": 10.32,
+      "rating": 4.37,
+      "stock": 1,
+      "tags": [
+        "fruits"
+      ],
+      "sku": "0X3NORB9",
+      "weight": 8,
+      "dimensions": {
+        "width": 27.3,
+        "height": 7.48,
+        "depth": 15.08
+      },
+      "warrantyInformation": "6 months warranty",
+      "shippingInformation": "Ships in 3-5 business days",
+      "availabilityStatus": "Low Stock",
+      "reviews": [
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Nora Russell",
+          "reviewerEmail": "nora.russell@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Very pleased!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Dylan Wells",
+          "reviewerEmail": "dylan.wells@x.dummyjson.com"
+        },
+        {
+          "rating": 5,
+          "comment": "Great product!",
+          "date": "2024-05-23T08:56:21.620Z",
+          "reviewerName": "Noah Hernandez",
+          "reviewerEmail": "noah.hernandez@x.dummyjson.com"
+        }
+      ],
+      "returnPolicy": "7 days return policy",
+      "minimumOrderQuantity": 8,
+      "meta": {
+        "createdAt": "2024-05-23T08:56:21.620Z",
+        "updatedAt": "2024-05-23T08:56:21.620Z",
+        "barcode": "3325493172934",
+        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
+      },
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Kiwi/1.png"
+      ],
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Kiwi/thumbnail.png",
+      "deleted": false
+    },
+    {
+      "id": "a0fd",
+      "title": "oppo is greate",
+      "brand": "Lipstick",
+      "category": "smartphones",
+      "price": "121",
+      "discountPercentage": "21",
+      "stock": "12",
+      "thumbnail": "https://www.google.com/imgres?q=clothes%20for%20men&imgurl=https%3A%2F%2Fassets.myntassets.com%2Fdpr_1.5%2Cq_60%2Cw_400%2Cc_limit%2Cfl_progressive%2Fassets%2Fimages%2F8717979%2F2019%2F3%2F20%2F585db9fe-1df0-458d-b218-6f514eabb9601553068826233-Mast--Harbour-Men-Shirts-4141553068825026-1.jpg&imgrefurl=https%3A%2F%2Fwww.myntra.com%2Fmen-clothing&docid=Eu752MzIP3AZjM&tbnid=J6Wdl-RIAQ9edM&vet=12ahUKEwjYo96Isd6FAxWmTGwGHUeKAUMQM3oECGgQAA..i&w=600&h=800&hcb=2&ved=2ahUKEwjYo96Isd6FAxWmTGwGHUeKAUMQM3oECGgQAA",
+      "images": [
+        "https://media.istockphoto.com/id/1394988455/photo/laptop-with-a-blank-screen-on-a-white-background.jpg?s=612x612&w=0&k=20&c=BXNMs3xZNXP__d22aVkeyfvgJ5T18r6HuUTEESYf_tE=",
+        "https://media.istockphoto.com/id/1394988455/photo/laptop-with-a-blank-screen-on-a-white-background.jpg?s=612x612&w=0&k=20&c=BXNMs3xZNXP__d22aVkeyfvgJ5T18r6HuUTEESYf_tE=",
+        "https://media.istockphoto.com/id/1394988455/photo/laptop-with-a-blank-screen-on-a-white-background.jpg?s=612x612&w=0&k=20&c=BXNMs3xZNXP__d22aVkeyfvgJ5T18r6HuUTEESYf_tE=",
+        "https://www.google.com/imgres?q=clothes%20for%20men&imgurl=https%3A%2F%2Fassets.myntassets.com%2Fdpr_1.5%2Cq_60%2Cw_400%2Cc_limit%2Cfl_progressive%2Fassets%2Fimages%2F8717979%2F2019%2F3%2F20%2F585db9fe-1df0-458d-b218-6f514eabb9601553068826233-Mast--Harbour-Men-Shirts-4141553068825026-1.jpg&imgrefurl=https%3A%2F%2Fwww.myntra.com%2Fmen-clothing&docid=Eu752MzIP3AZjM&tbnid=J6Wdl-RIAQ9edM&vet=12ahUKEwjYo96Isd6FAxWmTGwGHUeKAUMQM3oECGgQAA..i&w=600&h=800&hcb=2&ved=2ahUKEwjYo96Isd6FAxWmTGwGHUeKAUMQM3oECGgQAA"
+      ],
+      "rating": 0,
+      "deleted": false
+    },
+    {
+      "id": "8f55",
+      "title": "gshock is good",
+      "brand": "Boots",
+      "category": "smartphones",
+      "price": 2800,
+      "discountPercentage": 23,
+      "stock": 5,
+      "thumbnail": "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+      "images": [
+        "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg",
+        "https://m.media-amazon.com/images/I/71girhyQcJL._SX679_.jpg"
+      ],
+      "rating": 0
+    },
+    {
+      "id": "ffd1",
+      "title": "iphone 16 ",
+      "brand": "Lipstick",
+      "category": "smartphones",
+      "price": 150000,
+      "discountPercentage": 2,
+      "stock": 1,
+      "thumbnail": "https://m.media-amazon.com/images/I/31zA1lIK+tL._SX342_SY445_.jpg",
+      "images": [
+        "https://m.media-amazon.com/images/I/31zA1lIK+tL._SX342_SY445_.jpg",
+        "https://m.media-amazon.com/images/I/31zA1lIK+tL._SX342_SY445_.jpg",
+        "https://m.media-amazon.com/images/I/31zA1lIK+tL._SX342_SY445_.jpg",
+        "https://m.media-amazon.com/images/I/31zA1lIK+tL._SX342_SY445_.jpg"
+      ],
+      "rating": 0,
+      "deleted": false
+    }
+  ],
+  "categories": [
+    {
+      "value": "smartphones",
+      "label": "smartphones",
+      "checked": false,
+      "id": "d926"
+    },
+    {
+      "value": "laptops",
+      "label": "laptops",
+      "checked": false,
+      "id": "ce38"
+    },
+    {
+      "value": "fragrances",
+      "label": "fragrances",
+      "checked": false,
+      "id": "e4e3"
+    },
+    {
+      "value": "skincare",
+      "label": "skincare",
+      "checked": false,
+      "id": "13e3"
+    },
+    {
+      "value": "groceries",
+      "label": "groceries",
+      "checked": false,
+      "id": "659b"
+    },
+    {
+      "value": "home-decoration",
+      "label": "home decoration",
+      "checked": false,
+      "id": "65c4"
+    },
+    {
+      "value": "furniture",
+      "label": "furniture",
+      "checked": false,
+      "id": "cfde"
+    },
+    {
+      "value": "tops",
+      "label": "tops",
+      "checked": false,
+      "id": "c070"
+    },
+    {
+      "value": "womens-dresses",
+      "label": "womens dresses",
+      "checked": false,
+      "id": "534c"
+    },
+    {
+      "value": "womens-shoes",
+      "label": "womens shoes",
+      "checked": false,
+      "id": "f347"
+    },
+    {
+      "value": "mens-shirts",
+      "label": "mens shirts",
+      "checked": false,
+      "id": "87e4"
+    },
+    {
+      "value": "mens-shoes",
+      "label": "mens shoes",
+      "checked": false,
+      "id": "2bb6"
+    },
+    {
+      "value": "mens-watches",
+      "label": "mens watches",
+      "checked": false,
+      "id": "abec"
+    },
+    {
+      "value": "womens-watches",
+      "label": "womens watches",
+      "checked": false,
+      "id": "52bf"
+    },
+    {
+      "value": "womens-bags",
+      "label": "womens bags",
+      "checked": false,
+      "id": "74de"
+    },
+    {
+      "value": "womens-jewellery",
+      "label": "womens jewellery",
+      "checked": false,
+      "id": "7683"
+    },
+    {
+      "value": "sunglasses",
+      "label": "sunglasses",
+      "checked": false,
+      "id": "ffd0"
+    },
+    {
+      "value": "automotive",
+      "label": "automotive",
+      "checked": false,
+      "id": "cf58"
+    },
+    {
+      "value": "motorcycle",
+      "label": "motorcycle",
+      "checked": false,
+      "id": "f4e6"
+    },
+    {
+      "value": "lighting",
+      "label": "lighting",
+      "checked": false,
+      "id": "a5ab"
+    }
+  ],
+  "brands": [
+    {
+      "value": "Lipstick",
+      "label": "Lipstick",
+      "checked": false,
+      "id": "813c"
+    },
+    {
+      "value": "Foundation",
+      "label": "Foundation",
+      "checked": false,
+      "id": "7bee"
+    },
+    {
+      "value": "Mascara",
+      "label": "Mascara",
+      "checked": false,
+      "id": "fb9e"
+    },
+    {
+      "value": "Eyeliner",
+      "label": "Eyeliner",
+      "checked": false,
+      "id": "148c"
+    },
+    {
+      "value": "Perfume",
+      "label": "Perfume",
+      "checked": false,
+      "id": "95f5"
+    },
+    {
+      "value": "Skincare",
+      "label": "Skincare",
+      "checked": false,
+      "id": "bc37"
+    },
+    {
+      "value": "Casual Shoes",
+      "label": "Casual Shoes",
+      "checked": false,
+      "id": "28e0"
+    },
+    {
+      "value": "Sports Shoes",
+      "label": "Sports Shoes",
+      "checked": false,
+      "id": "15e4"
+    },
+    {
+      "value": "Running Shoes",
+      "label": "Running Shoes",
+      "checked": false,
+      "id": "801c"
+    },
+    {
+      "value": "Sneakers",
+      "label": "Sneakers",
+      "checked": false,
+      "id": "fde6"
+    },
+    {
+      "value": "Sandals",
+      "label": "Sandals",
+      "checked": false,
+      "id": "e480"
+    },
+    {
+      "value": "Flip Flops",
+      "label": "Flip Flops",
+      "checked": false,
+      "id": "9865"
+    },
+    {
+      "value": "Boots",
+      "label": "Boots",
+      "checked": false,
+      "id": "4139"
+    },
+    {
+      "value": "Slippers",
+      "label": "Slippers",
+      "checked": false,
+      "id": "61e6"
+    },
+    {
+      "value": "Groceries",
+      "label": "Groceries",
+      "id": "e818"
+    },
+    {
+      "value": "Fruits",
+      "label": "Fruits",
+      "id": "3fcd"
+    },
+    {
+      "value": "Vegetables",
+      "label": "Vegetables",
+      "id": "6267"
+    },
+    {
+      "value": "Seafood",
+      "label": "Seafood",
+      "id": "23a1"
+    },
+    {
+      "value": "Condiments",
+      "label": "Condiments",
+      "id": "f8ac"
+    },
+    {
+      "value": "Desserts",
+      "label": "Desserts",
+      "id": "6a6a"
+    },
+    {
+      "value": "Beverages",
+      "label": "Beverages",
+      "id": "02a3"
+    },
+    {
+      "value": "Pet Supplies",
+      "label": "Pet Supplies",
+      "id": "c4e6"
+    },
+    {
+      "value": "Dairy",
+      "label": "Dairy",
+      "id": "63f9"
+    }
+  ],
+ 
+
 
   // session or github login
   const {data:session}=useSession();

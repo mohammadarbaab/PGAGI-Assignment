@@ -19,7 +19,7 @@ export default function Home() {
 
       {/* Stock Component */}
       {selectedSymbol && (
-        <div className="w-full mx-auto mt-8 bg-white rounded-lg shadow-lg p-6">
+        <div className="w-full mx-auto mt-8 bg-orange-50 rounded-lg shadow-lg p-6">
           <Stock symbol={selectedSymbol} />
         </div>
       )}

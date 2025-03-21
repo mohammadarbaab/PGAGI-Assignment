@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 // import { useState } from "react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -27,6 +27,17 @@ import { signOut, useSession } from "next-auth/react";
 
 const Dashboard = () => {
   // const [selectedSymbol, setSelectedSymbol] = useState(null);
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&include_adult=false&include_video=false`
+      );
+      const data = await response.json();
+      setMovies(data.results.slice(0, 3)); // Fetching only 3 movies
+    };
+    fetchMovies();
+  }, []);
   const [chartData, setChartData] = useState({
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
@@ -112,7 +123,6 @@ const Dashboard = () => {
       easing: "easeInOutQuad", // Smooth animation
     },
   };
-
 
   return (
     <>
@@ -212,7 +222,7 @@ const Dashboard = () => {
                 {/* Stock Market Image */}
                 <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                   <img
-                    src="images/stock.png" // Replace with your image path
+                    src="images/stock.jpg" // Replace with your image path
                     alt="Stock Market"
                     className="w-full h-full object-cover"
                     onError={(e) => {
@@ -221,6 +231,28 @@ const Dashboard = () => {
                   />
                 </div>
               </div>
+            </Link>
+          </div>
+
+          <div className="bg-white/90 backdrop-blur-md p-8 mt-8 rounded-2xl shadow-lg cursor-pointer hover:scale-105 hover:shadow-2xl transition-all duration-500 border border-white/20 flex flex-col justify-center items-center gap-4">
+            <h2 className="text-4xl font-bold mb-6 text-center text-blue-900">Top Movies</h2>
+            <div className="flex justify-center gap-8 mb-6">
+              {movies.map((movie) => (
+                <div className="w-48 text-center" key={movie.id}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    className="w-full h-auto rounded-lg"
+                  />
+                  <h3 className="mt-4 text-lg font-medium">{movie.title}</h3>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/movieApp"
+              className="text-blue-500 font-semibold hover:underline"
+            >
+              Explore More Movies
             </Link>
           </div>
         </div>

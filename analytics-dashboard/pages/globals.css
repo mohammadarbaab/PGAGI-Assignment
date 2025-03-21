@@ -5,3 +5,12 @@
 body {
   background-color: #fff;
 }
+
+@layer components {
+  .sidebarTitle {
+    @apply font-semibold text-[18px];
+  }
+  .sidebarLink {
+    @apply ml-4 cursor-pointer transition w-fit;
+  }
+}

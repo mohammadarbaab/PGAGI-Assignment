@@ -11,6 +11,7 @@ import FeelsLike from "../weatherComponents/FeelsLike";
 import HumidityInfo from "../weatherComponents/Humadity";
 import Visibilty from "../weatherComponents/Visibility";
 import VisibilityInfo from "../weatherComponents/Visibility";
+
 // // import FiveDaysGraph from "../weatherComponents/FiveDaysGraph";
 
 // export default function Home() {
@@ -233,6 +234,8 @@ export default function Home() {
           )}
         </main>
       </div>
+
+
     </>
   );
 }

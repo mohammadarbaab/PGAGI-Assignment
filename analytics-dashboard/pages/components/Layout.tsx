@@ -319,15 +319,6 @@
 
 // export default Layout;
 
-
-
-
-
-
-
-
-
-
 // Ohkey
 import { useDispatch, useSelector } from "react-redux";
 import { signOutAsync, selectLoggedInUser } from "../../store/auth/authSlice"; // Select user data from Redux
@@ -441,6 +432,51 @@ const Layout = ({ children }) => {
                 News
               </Link>
             </li>
+            <li className="mb-4">
+              <Link
+                href="/stockMarket"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 12l2 2 4-4 6 6 8-8"
+                  ></path>
+                </svg>
+                Stock Check
+              </Link>
+            </li>
+
+            <li className="mb-4">
+              <Link
+                href="/movieApp"
+                className="text-gray-700 hover:text-purple-600 transition-colors duration-300 flex items-center"
+              >
+                <svg
+                  className="w-6 h-6 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M7 3v18m10-18v18M5 7h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2z"
+                  ></path>
+                </svg>
+                Movies
+              </Link>
+            </li>
           </ul>
         </div>
       )}
@@ -474,6 +510,7 @@ const Layout = ({ children }) => {
                 ></path>
               </svg>
             </button>
+
 
             {/* User Profile & Logout Button */}
 
